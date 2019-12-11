@@ -35,8 +35,28 @@ public class PlayerBase : MonoBehaviour
     internal void PickUp(GameObject gameObject)
     {
         //auto pickup for now
-        gameObject.transform.position = headSpace.transform.position;
-        gameObject.transform.parent = headSpace.transform;
+        var interScript = gameObject.GetComponent<InteractableBase>();
+
+        if (interScript.type == InteractableType.Flag)
+        {
+            gameObject.transform.position = headSpace.transform.position;
+            gameObject.transform.parent = headSpace.transform;
+        }
+        if (interScript.type == InteractableType.Attack)
+        {
+            gameObject.transform.position = rightArmSpace.transform.position;
+            gameObject.transform.parent = rightArmSpace.transform;
+
+        }
+        if (interScript.type == InteractableType.Defense)
+        {
+            gameObject.transform.position = leftArmSpace.transform.position;
+            gameObject.transform.parent = leftArmSpace.transform;
+        }
+
+        interScript.setIsPickedUp(true);
+        
+
     }
 
     // Update is called once per frame

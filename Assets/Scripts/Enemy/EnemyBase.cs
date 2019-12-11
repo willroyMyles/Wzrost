@@ -11,14 +11,13 @@ public class EnemyBase : PlayerBase
     Canvas canvas;
     CanvasGroup group;
     Image image;
-    Vector3 canvasOriginalPosition;
 
     float timeCanvasShown = 2f;
     float maxShownTime = 2f;
 
     bool shouldShowCanves = false;
 
-    void Start()  
+    new void  Start()  
     {
         //Start();
         base.Start();
@@ -29,7 +28,6 @@ public class EnemyBase : PlayerBase
         }
         image = GetComponentInChildren<Image>();
         group = canvas.GetComponent<CanvasGroup>();
-        canvasOriginalPosition = canvas.transform.position;
     }
 
     public void StunEnemy(float stunTime)
@@ -49,19 +47,12 @@ public class EnemyBase : PlayerBase
         if (shouldShowCanves)
         {
             //updates alpha
-            //canvas.transform.LookAt(Camera.allCameras[0].transform.position);
             group.alpha = Mathf.Lerp(0, 1, timeCanvasShown / maxShownTime);
 
             //update position
-
-            var imagePoint = gameObject.transform.position + canvas.transform.localPosition * 2;
             var screenpos = Camera.allCameras[0].WorldToScreenPoint(gameObject.transform.position);
             var point = new Vector2();
-
             RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform, screenpos, Camera.allCameras[0], out point);
-
-            
-
             image.transform.position = canvas.transform.TransformPoint(point) ;
             timeCanvasShown -= Time.deltaTime;
 

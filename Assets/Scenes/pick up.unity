@@ -134,6 +134,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 983557644305064736, guid: 688fa73cca3899f4c850bcbfbd4bbeb9,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.95
+      objectReference: {fileID: 0}
     - target: {fileID: 1888294017262350211, guid: 688fa73cca3899f4c850bcbfbd4bbeb9,
         type: 3}
       propertyPath: m_Name
@@ -214,6 +219,11 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7419852709626115362, guid: 688fa73cca3899f4c850bcbfbd4bbeb9,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.95
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 688fa73cca3899f4c850bcbfbd4bbeb9, type: 3}
 --- !u!1 &808334706 stripped
@@ -250,6 +260,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8c9876b3628df24f85575d0702bc425, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 1
+  canvasPrefab: {fileID: 2060480685896581973, guid: 8b9cd0aa43e058a45b9996a87aca53e1,
+    type: 3}
+  text: {fileID: 0}
+  name: Flag!
 --- !u!136 &808334710
 CapsuleCollider:
   m_ObjectHideFlags: 0

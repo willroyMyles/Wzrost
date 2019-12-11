@@ -84,16 +84,22 @@ public class CameraBase : MonoBehaviour
         }
     }
 
+    protected void checkForNullTargets()
+    {
+        foreach (var obj in targets)
+        {
+            if (obj == null) targets.Remove(obj);
+        }
+
+    }
+
     protected void FindAveragePosition()
     {
         var avgPos = new Vector3();
         int numOfTargets = 0; // replace number with target.count
 
         //check if gameobjects are still alive
-        foreach (var obj in targets)
-        {
-            if (obj == null) targets.Remove(obj);
-        }
+        checkForNullTargets();
 
         for (int i = 0; i < targets.Count; i++)
         {

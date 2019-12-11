@@ -28,7 +28,7 @@ public class PlayerMovement : MonoBehaviour
             vec = vec * speed * Time.deltaTime;
             if (vec != Vector3.zero) transform.forward = -vec;
 
-            vec.y = -10 * Time.deltaTime;
+            //vec.y = -10 * Time.deltaTime;
             GetComponent<CharacterController>().Move(vec);
 
             if (pushPlayerBack)

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,12 +22,21 @@ public class PlayerBase : MonoBehaviour
     public float Defense { get => defense; set => defense = value; }
     public float RecoveryRate { get => recoveryRate; set => recoveryRate = value; }
 
+    public GameObject headSpace, rightArmSpace, leftArmSpace;
+
     // Start is called before the first frame update
     protected void Start()
     {
         Hp = 10f;
         Speed = Attack = AttackRate = Defense = RecoveryRate = 1f;
         cameraShake = FindObjectOfType<CameraShake>();
+    }
+
+    internal void PickUp(GameObject gameObject)
+    {
+        //auto pickup for now
+        gameObject.transform.position = headSpace.transform.position;
+        gameObject.transform.parent = headSpace.transform;
     }
 
     // Update is called once per frame
@@ -47,11 +57,11 @@ public class PlayerBase : MonoBehaviour
         cameraShake.Shake();
     }
 
-
-
     public void die()
     {
         Debug.Log("im dead damit!");
         Destroy(gameObject);
     }
+
+
 }

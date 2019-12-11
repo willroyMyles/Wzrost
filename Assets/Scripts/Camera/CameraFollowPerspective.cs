@@ -31,7 +31,7 @@ public class CameraFollowPerspective : CameraBase
         if (targets.Count <= 1)
         {
             desiredPosition = player.localPosition + offset;
-            desiredPosition.y = originalY;
+            //desiredPosition.y = originalY;
             Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed * Time.deltaTime);
             transform.position = smoothedPosition;
         }
@@ -62,9 +62,13 @@ public class CameraFollowPerspective : CameraBase
         }
     }
 
+
+
     private float getGreatestDistance()
     {
         var bounds = new Bounds(targets[0].transform.position, Vector3.zero);
+        checkForNullTargets();
+
         for (int i = 0; i < targets.Count; i++)
         {
             if (targets[i] != null) bounds.Encapsulate(targets[i].transform.position);
@@ -75,6 +79,7 @@ public class CameraFollowPerspective : CameraBase
     protected new Vector3 FindAveragePosition()
     {
         var bounds = new Bounds(targets[0].transform.position, Vector3.zero);
+        checkForNullTargets();
 
 
         for (int i = 0; i < targets.Count; i++)

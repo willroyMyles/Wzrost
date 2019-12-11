@@ -17,7 +17,7 @@ public class GameController : MonoBehaviour
     {
         playgroundSize = ground.GetComponent<MeshRenderer>().bounds.size;
         ground.GetComponent<NavMeshSurface>().BuildNavMesh();
-        GetComponent<SpawnController>().spawnEnemies(enemyPrefab);
+        if(enemyPrefab != null) GetComponent<SpawnController>().spawnEnemies(enemyPrefab);
     }
 
     // Update is called once per frame

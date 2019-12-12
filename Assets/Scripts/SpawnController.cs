@@ -17,6 +17,18 @@ public class SpawnController : MonoBehaviour
         
     }
 
+    public void spawnEnemies(GameObject obj, int amount)
+    {
+        size = FindObjectOfType<GameController>().PlaygroundSize;
+        int divisionFactor = 10; // 2 by default for eeach half
+
+        for (int i = 0; i < amount; i++)
+        {
+            var pos = center + new Vector3(UnityEngine.Random.Range(-size.x / divisionFactor, size.x / divisionFactor), 4f, UnityEngine.Random.Range(-size.z / divisionFactor, size.z / divisionFactor));
+            Instantiate(obj, pos, Quaternion.identity);
+        }
+    }
+
     public void spawnEnemies(GameObject obj)
     {
             size = FindObjectOfType<GameController>().PlaygroundSize;

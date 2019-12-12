@@ -18,12 +18,6 @@ public class DetectionSphere : MonoBehaviour
         else cf = FindObjectOfType<CameraFollowPerspective>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if(gameObject.tag == "Player")

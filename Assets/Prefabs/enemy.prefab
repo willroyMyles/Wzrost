@@ -414,10 +414,11 @@ GameObject:
   m_Component:
   - component: {fileID: 6253267321133866857}
   - component: {fileID: -3413545424611741176}
-  - component: {fileID: 213880069098884423}
   - component: {fileID: 5672379541550408819}
   - component: {fileID: 2612456498961198218}
   - component: {fileID: -3385887107453564937}
+  - component: {fileID: 6618996727615777261}
+  - component: {fileID: -8924138084698775880}
   m_Layer: 0
   m_Name: enemy
   m_TagString: Enemy
@@ -463,19 +464,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!65 &213880069098884423
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6958985734504639866}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.24, y: 1, z: 1}
-  m_Center: {x: -0.1, y: 0.38, z: -0.06}
 --- !u!114 &5672379541550408819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -519,6 +507,31 @@ MonoBehaviour:
   headSpace: {fileID: 0}
   rightArmSpace: {fileID: 0}
   leftArmSpace: {fileID: 0}
+--- !u!135 &6618996727615777261
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6958985734504639866}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 15
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-8924138084698775880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6958985734504639866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35d473e0371fa9446ae65c9b75ed85d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8117951965481217854
 GameObject:
   m_ObjectHideFlags: 0
@@ -791,6 +804,11 @@ PrefabInstance:
     - target: {fileID: 124334859658069759, guid: 8b9cd0aa43e058a45b9996a87aca53e1,
         type: 3}
       propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2912509858940319872, guid: 8b9cd0aa43e058a45b9996a87aca53e1,
+        type: 3}
+      propertyPath: m_Alpha
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6322399658256694082, guid: 8b9cd0aa43e058a45b9996a87aca53e1,

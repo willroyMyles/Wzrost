@@ -263,7 +263,6 @@ MonoBehaviour:
   type: 1
   canvasPrefab: {fileID: 2060480685896581973, guid: 8b9cd0aa43e058a45b9996a87aca53e1,
     type: 3}
-  text: {fileID: 0}
   name: Flag!
 --- !u!136 &808334710
 CapsuleCollider:
@@ -355,6 +354,12 @@ PrefabInstance:
         type: 3}
       propertyPath: enemyPrefab
       value: 
+      objectReference: {fileID: 6958985734504639866, guid: ee469f412474bce4aa1489a4ba24805a,
+        type: 3}
+    - target: {fileID: 7348926269059918307, guid: 24a9fa12bddb5ea47aed5f5baf813686,
+        type: 3}
+      propertyPath: amountOfEnemies
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 24a9fa12bddb5ea47aed5f5baf813686, type: 3}

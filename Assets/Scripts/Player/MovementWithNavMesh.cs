@@ -39,10 +39,16 @@ public class MovementWithNavMesh : MonoBehaviour
 
         if (pushPlayerBack)
         {
-            player.Move(transform.position - -transform.forward * pushBackDistance);
+            player.Move(transform.forward * pushBackDistance);
             player.SetDestination(transform.position - -transform.forward * pushBackDistance);
           
             pushPlayerBack = false;
         }
+    }
+
+    public void PushPlayerBack(float blowBack)
+    {
+        pushBackDistance = blowBack;
+        pushPlayerBack = true;
     }
 }

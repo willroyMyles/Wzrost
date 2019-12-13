@@ -27,7 +27,7 @@ public class InteractableBase : MonoBehaviour
     Image image;
     TMPro.TextMeshProUGUI text;
 
-    float maxDistance;
+    float maxDistance = 1;
     bool shouldShowCanves = false;
     private bool isPickedUp = false;
     public string name;
@@ -80,7 +80,7 @@ public class InteractableBase : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Interactor")
         {
             //show controls. auto pickup for now;
             maxDistance = Vector3.Distance(other.transform.position, transform.position);
@@ -90,7 +90,7 @@ public class InteractableBase : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Interactor")
         {
             //show controls. auto pickup for now;
             shouldShowCanves = false;
@@ -100,7 +100,7 @@ public class InteractableBase : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "Player" || other.gameObject.tag == "Enemy")
+        if (other.gameObject.tag == "Interactor" || other.gameObject.tag == "Enemy")
         {
             currentDistance = Vector3.Distance(gameObject.transform.position, other.gameObject.transform.position);
             if(currentDistance < this.distance)

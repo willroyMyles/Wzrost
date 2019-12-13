@@ -57,7 +57,7 @@ public class EnemyController : MonoBehaviour
                     lowestHealthEnemy = health;
                     obj = en;
                 }
-            }
+            } 
             //faceEnemy
             agent.transform.LookAt(obj.transform.position);
         }

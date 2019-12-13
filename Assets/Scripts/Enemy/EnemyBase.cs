@@ -18,7 +18,7 @@ public class EnemyBase : PlayerBase
     Canvas canvas;
     CanvasGroup group;
     Image image;
-
+    TMPro.TextMeshProUGUI text;
     float timeCanvasShown = 2f;
     float maxShownTime = 2f;
 
@@ -31,6 +31,8 @@ public class EnemyBase : PlayerBase
     {
         //Start();
         base.Start();
+
+        var go = transform.parent;
         canvas = GetComponentInChildren<Canvas>();
         if (canvas.worldCamera == null)
         {
@@ -39,10 +41,13 @@ public class EnemyBase : PlayerBase
         image = GetComponentInChildren<Image>();
         group = canvas.GetComponent<CanvasGroup>();
         stats.aggression = 1;
+        text = GetComponentInChildren<TMPro.TextMeshProUGUI>();
+        text.text = baseStats.hp.ToString();
     }
 
     public void StunEnemy(float stunTime)
     {
+        var go = transform.parent.transform;
         StartCoroutine(GetComponent<EnemyController>().stunPlayer(stunTime));
     }
 
@@ -50,6 +55,7 @@ public class EnemyBase : PlayerBase
     {
         base.takeDamage(damage);
         StunEnemy(stunOnHit);
+        text.text = ((int)(baseStats.hp * 10)).ToString() + "%";
         shouldShowCanves = true;
     }
 
@@ -61,7 +67,7 @@ public class EnemyBase : PlayerBase
             group.alpha = Mathf.Lerp(0, 1, timeCanvasShown / maxShownTime);
 
             //update position
-            var screenpos = Camera.allCameras[0].WorldToScreenPoint(gameObject.transform.position);
+            var screenpos = Camera.allCameras[0].WorldToScreenPoint(gameObject.transform.position); 
             var point = new Vector2();
             RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform, screenpos, Camera.allCameras[0], out point);
             image.transform.position = canvas.transform.TransformPoint(point) ;

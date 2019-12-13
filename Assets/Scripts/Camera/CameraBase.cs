@@ -93,7 +93,7 @@ public class CameraBase : MonoBehaviour
 
     }
 
-    protected void FindAveragePosition()
+    protected Vector3 FindAveragePosition()
     {
         var avgPos = new Vector3();
         int numOfTargets = 0; // replace number with target.count
@@ -108,8 +108,8 @@ public class CameraBase : MonoBehaviour
         }
 
         avgPos /= numOfTargets;
-        avgPos.y = .8f;
         desiredPosition = avgPos;
+        return avgPos;
     }
     #endregion
 

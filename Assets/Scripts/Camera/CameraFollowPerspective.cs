@@ -8,9 +8,9 @@ public class CameraFollowPerspective : CameraBase
 
     protected float originalY, originalZ;
     Vector3 centerPoint;
-    float minZoom = 35f;
-    float maxZoom = 65f;
-    float zoomBuffer = 5f;
+    float minZoom = 30f;
+    float maxZoom = 70f;
+    float zoomBuffer = 35f;
 
     private new void Start()
     {
@@ -26,7 +26,7 @@ public class CameraFollowPerspective : CameraBase
         Zoom();
     }
 
-    protected void Move()
+    protected new void Move()
     {
         if (targets.Count <= 1)
         {
@@ -37,12 +37,10 @@ public class CameraFollowPerspective : CameraBase
         }
         else
         {
-
-
-            centerPoint = FindAveragePosition();
+            centerPoint = base.FindAveragePosition();
             var newPosition = centerPoint + offset;
             //desiredPosition.y = originalY;
-            transform.position = Vector3.SmoothDamp(transform.position, newPosition, ref moveVelocity, dampTime);
+            transform.position = Vector3.Lerp(transform.position, newPosition, smoothSpeed * Time.deltaTime);
 
         }
     }
@@ -51,7 +49,7 @@ public class CameraFollowPerspective : CameraBase
     {
         if( targets.Count <= 1)
         {
-            float zoomDistance = Mathf.Lerp(maxZoom, minZoom, .3f);
+            float zoomDistance = Mathf.Lerp(maxZoom, minZoom, .02f);
             cam.fieldOfView = zoomDistance;
         }
         else
@@ -67,6 +65,7 @@ public class CameraFollowPerspective : CameraBase
     private float getGreatestDistance()
     {
         var bounds = new Bounds(targets[0].transform.position, Vector3.zero);
+        //var bounds = new Bounds();
         checkForNullTargets();
 
         for (int i = 0; i < targets.Count; i++)
@@ -79,6 +78,8 @@ public class CameraFollowPerspective : CameraBase
     protected new Vector3 FindAveragePosition()
     {
         var bounds = new Bounds(targets[0].transform.position, Vector3.zero);
+        //var bounds = new Bounds();
+
         checkForNullTargets();
 
 
@@ -88,7 +89,7 @@ public class CameraFollowPerspective : CameraBase
         }
 
         return bounds.center;
-
+        
     }
 
 

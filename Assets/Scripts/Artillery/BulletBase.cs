@@ -43,7 +43,8 @@ public class BulletBase : MonoBehaviour
     {
         if(collision.gameObject.tag == "Enemy")
         {
-            collision.gameObject.GetComponent<EnemyBase>().takeDamage(damage, stunOnHit);
+            var eb = collision.gameObject.transform.parent.GetComponentInChildren<EnemyBase>();
+            eb.takeDamage(damage, stunOnHit);
         }
 
         if(collision.gameObject.tag == "Player")

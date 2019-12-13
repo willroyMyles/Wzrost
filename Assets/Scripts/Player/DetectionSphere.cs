@@ -16,6 +16,7 @@ public class DetectionSphere : MonoBehaviour
     {
         if (Camera.allCameras[0].orthographic) cf = FindObjectOfType<CameraFollow>();
         else cf = FindObjectOfType<CameraFollowPerspective>();
+        cf.AddToList(gameObject);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -23,7 +24,7 @@ public class DetectionSphere : MonoBehaviour
         if(gameObject.tag == "Player")
         {
             //position camera to view both players
-           if(other.gameObject.tag == "Enemy" || other.gameObject.tag == "Player") cf.AddToList(other.gameObject);
+           if(other.gameObject.tag == "Enemy") cf.AddToList(other.gameObject);
         }
     }
 
@@ -32,7 +33,7 @@ public class DetectionSphere : MonoBehaviour
         if (gameObject.tag == "Player")
         {
             //position camera to view both players
-            if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Player") cf.removeFromList(other.gameObject);
+            if (other.gameObject.tag == "Enemy") cf.removeFromList(other.gameObject);
         }
     }
 

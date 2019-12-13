@@ -354,7 +354,7 @@ PrefabInstance:
         type: 3}
       propertyPath: enemyPrefab
       value: 
-      objectReference: {fileID: 6958985734504639866, guid: ee469f412474bce4aa1489a4ba24805a,
+      objectReference: {fileID: 618703770797768840, guid: 16652361ac0127f42a3696c55d508fcc,
         type: 3}
     - target: {fileID: 7348926269059918307, guid: 24a9fa12bddb5ea47aed5f5baf813686,
         type: 3}
@@ -731,6 +731,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Cameras
+      objectReference: {fileID: 0}
+    - target: {fileID: 6976848688493185124, guid: 8c57a6c8e38cb0241a448beeb98e1e65,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 6976848688493185438, guid: 8c57a6c8e38cb0241a448beeb98e1e65,
         type: 3}

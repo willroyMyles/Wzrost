@@ -26,10 +26,14 @@ public class BulletBase : MonoBehaviour
 
     void Start()
     {
-        velocity = -gameObject.transform.forward * bulletSpeed;
-        velocity.y = 0;
-        GetComponent<Rigidbody>().velocity = velocity;
+        
 
+    }
+
+    public void setUpBall(Vector3 dir)
+    {
+        velocity = dir * bulletSpeed;
+        GetComponent<Rigidbody>().velocity = velocity;
     }
 
     // Update is called once per frame

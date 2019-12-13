@@ -92,6 +92,7 @@ GameObject:
   - component: {fileID: 4990387044868764260}
   - component: {fileID: 7513654178635488490}
   - component: {fileID: 8452279438188692527}
+  - component: {fileID: 3480782475295575330}
   m_Layer: 0
   m_Name: enemy
   m_TagString: Untagged
@@ -165,6 +166,20 @@ MonoBehaviour:
   headSpace: {fileID: 0}
   rightArmSpace: {fileID: 0}
   leftArmSpace: {fileID: 0}
+--- !u!114 &3480782475295575330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 618703770797768840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7400362a22846f54898f2facd89d0311, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 6745133267992738246, guid: ccc25f59cc3b4044a9f3601ac80e3dfd,
+    type: 3}
 --- !u!1 &1642824049304907222
 GameObject:
   m_ObjectHideFlags: 0

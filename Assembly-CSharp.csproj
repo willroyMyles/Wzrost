@@ -78,8 +78,10 @@
     <Compile Include="Assets\Scripts\Enemy\EnemyBase.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyController.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyDetectionScript.cs" />
+    <Compile Include="Assets\Scripts\Enemy\EnemyFireController.cs" />
     <Compile Include="Assets\Scripts\General\BaseStats.cs" />
     <Compile Include="Assets\Scripts\General\GameController.cs" />
+    <Compile Include="Assets\Scripts\General\Global.cs" />
     <Compile Include="Assets\Scripts\General\SpawnController.cs" />
     <Compile Include="Assets\Scripts\Interactable\InteractableBase.cs" />
     <Compile Include="Assets\Scripts\Player\DetectionSphere.cs" />

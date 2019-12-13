@@ -35,12 +35,12 @@ public class MovementWithNavMesh : MonoBehaviour
         player.Move(vec);
         player.SetDestination(player.transform.position + vec);
         //player.transform.LookAt(vec);
-        if (vec != Vector3.zero) player.transform.forward = -vec;
+        if (vec != Vector3.zero) player.transform.forward = vec;
 
         if (pushPlayerBack)
         {
-            player.Move(transform.forward * pushBackDistance);
-            player.SetDestination(transform.position - -transform.forward * pushBackDistance);
+            player.Move(-transform.forward * pushBackDistance);
+            //player.SetDestination(transform.position - transform.forward * pushBackDistance);
           
             pushPlayerBack = false;
         }

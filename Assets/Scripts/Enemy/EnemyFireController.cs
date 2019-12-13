@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FireController : MonoBehaviour
+public class EnemyFireController : MonoBehaviour
 {
     public GameObject bulletPrefab;
 
-    float fireRate = .5f;
+    float fireRate = 2.5f;
     float nextFire = 0;
     float coolDownTime = 0;
     float spawnDistance = 1f;
@@ -20,12 +20,18 @@ public class FireController : MonoBehaviour
 
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (fire)
+        {
+
+            coolDownTime = 0;
+            fire = false;
+        }
         if (coolDownTime < fireRate)
         {
             coolDownTime += Time.deltaTime;
@@ -34,28 +40,27 @@ public class FireController : MonoBehaviour
         {
             coolDownTime = fireRate;
         }
-
-        if (fire)
-        {
-
-            coolDownTime = 0;
-            fire = false;
-        }
-        if (Input.GetMouseButtonDown(0)) Fire();
     }
 
     public void Fire()
     {
-        if(CoolDownTime == fireRate)
+        if (CoolDownTime == fireRate)
         {
             fire = true;
-            var spawnPos = gameObject.transform.position + gameObject.transform.forward * spawnDistance;
-            var bullet = Instantiate(bulletPrefab, spawnPos, gameObject.transform.rotation);
+            var spawnPos = gameObject.transform.position + transform.forward * spawnDistance;
+            var bullet = Instantiate(bulletPrefab, spawnPos, Quaternion.identity);
+            bullet.GetComponent<BulletBase>().setUpBall(transform.forward);
 
             //push player back
-            var pm = GetComponent<MovementWithNavMesh>();
-            float bb = bullet.GetComponent<BulletBase>().BlowBack;
-            pm.PushPlayerBack(bb);
+            //var pm = GetComponent<MovementWithNavMesh>();
+            //float bb = bullet.GetComponent<BulletBase>().BlowBack;
+            //pm.PushPlayerBack(bb);
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawSphere(gameObject.transform.position + gameObject.transform.forward * spawnDistance, 1);
+        Gizmos.color = Color.red;
     }
 }

@@ -51,7 +51,9 @@ public class EnemyController : MonoBehaviour
             GameObject obj = null;
             foreach(var en in fightList)
             {
-                var health = GetComponent<EnemyBase>().Hp;
+                float health;
+                if(en.tag == "Player") health = en.transform.parent.GetComponent<PlayerBase>().Hp;
+                else health = en.transform.parent.GetComponent<EnemyBase>().Hp;
                 if (lowestHealthEnemy > health)
                 {
                     lowestHealthEnemy = health;
@@ -60,6 +62,10 @@ public class EnemyController : MonoBehaviour
             } 
             //faceEnemy
             agent.transform.LookAt(obj.transform.position);
+
+            //fire bullet
+            var efm = GetComponent<EnemyFireController>();
+            efm.Fire();
         }
     }
 
@@ -88,5 +94,9 @@ public class EnemyController : MonoBehaviour
         }
     }
 
- 
+    private void OnDestroy()
+    {
+        this.enabled = false;
+    }
+
 }

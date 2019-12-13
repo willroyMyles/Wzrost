@@ -47,7 +47,6 @@ public class EnemyBase : PlayerBase
 
     public void StunEnemy(float stunTime)
     {
-        var go = transform.parent.transform;
         StartCoroutine(GetComponent<EnemyController>().stunPlayer(stunTime));
     }
 

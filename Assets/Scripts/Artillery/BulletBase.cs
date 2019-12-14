@@ -17,6 +17,7 @@ public class BulletBase : MonoBehaviour
     float damageFallOff = 4f;
     float stunOnHit = .15f;
     float blowBack = 2f;
+    string whoDoIBelongTo;
 
     bool isDefelectable = true;
 
@@ -30,8 +31,9 @@ public class BulletBase : MonoBehaviour
 
     }
 
-    public void setUpBall(Vector3 dir)
+    public void setUpBall(Vector3 dir, string whoIBelongTo)
     {
+        whoDoIBelongTo = whoIBelongTo;
         velocity = dir * bulletSpeed;
         GetComponent<Rigidbody>().velocity = velocity;
     }
@@ -49,12 +51,17 @@ public class BulletBase : MonoBehaviour
         {
             var eb = collision.gameObject.transform.parent.GetComponentInChildren<EnemyBase>();
             eb.takeDamage(damage, stunOnHit);
+            if (whoDoIBelongTo == "Player") eb.cameraShake.Shake();
+            Destroy(gameObject);
+
         }
 
-        if(collision.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Player")
         {
-            collision.gameObject.GetComponent<PlayerBase>().takeDamage(damage);
-
+            var eb = collision.gameObject.GetComponent<PlayerBase>();
+            eb.takeDamage(damage);
+            if (whoDoIBelongTo == "Player") eb.cameraShake.Shake();
+            Destroy(gameObject);
         }
 
     }
@@ -64,7 +71,10 @@ public class BulletBase : MonoBehaviour
         if(isDefelectable)
         {
             damage -= damageFallOff;
-            velocity = -gameObject.transform.forward * bulletSpeed * speedincrease;
+            velocity = gameObject.transform.forward * bulletSpeed * speedincrease;
+            GetComponent<Rigidbody>().velocity = velocity;
+            Destroy(gameObject);
         }
+        
     }
 }

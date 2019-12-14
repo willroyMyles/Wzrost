@@ -51,6 +51,7 @@ public class FireController : MonoBehaviour
             fire = true;
             var spawnPos = gameObject.transform.position + gameObject.transform.forward * spawnDistance;
             var bullet = Instantiate(bulletPrefab, spawnPos, gameObject.transform.rotation);
+            bullet.GetComponent<BulletBase>().setUpBall(transform.forward, gameObject.tag);
 
             //push player back
             var pm = GetComponent<MovementWithNavMesh>();

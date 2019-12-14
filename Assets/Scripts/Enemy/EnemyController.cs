@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -49,6 +50,7 @@ public class EnemyController : MonoBehaviour
             //canMove = false;
             float lowestHealthEnemy = 1000;
             GameObject obj = null;
+            checkFightList(); 
             foreach(var en in fightList)
             {
                 float health;
@@ -61,11 +63,19 @@ public class EnemyController : MonoBehaviour
                 }
             } 
             //faceEnemy
-            agent.transform.LookAt(obj.transform.position);
+            if(obj != null) agent.transform.LookAt(obj.transform.position);
 
             //fire bullet
             var efm = GetComponent<EnemyFireController>();
             efm.Fire();
+        }
+    }
+
+    private void checkFightList()
+    {
+        for (int i =0; i < fightList.Count; i++)
+        {
+            if (fightList[i] == null) fightList.Remove(fightList[i]);
         }
     }
 

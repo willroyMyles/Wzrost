@@ -9,7 +9,7 @@ using UnityEngine;
 public class PlayerBase : MonoBehaviour
 {
 
-    CameraShake cameraShake;
+    internal CameraShake cameraShake;
 
 
     float damage = 0;
@@ -77,13 +77,14 @@ public class PlayerBase : MonoBehaviour
     public void takeDamage(float damage)
     {
         Hp -= damage;
-        cameraShake.Shake();
+        //cameraShake.Shake();
     }
 
     public void die()
     {
         Debug.Log("im dead damit!");
         Destroy(gameObject);
+        this.enabled = false;
     }
 
 

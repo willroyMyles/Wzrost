@@ -9,7 +9,7 @@ public class EnemyFireController : MonoBehaviour
     float fireRate = 2.5f;
     float nextFire = 0;
     float coolDownTime = 0;
-    float spawnDistance = 1f;
+    float spawnDistance = 2f;
     bool fire = false;
 
     Vector3 finalPosition;
@@ -49,12 +49,12 @@ public class EnemyFireController : MonoBehaviour
             fire = true;
             var spawnPos = gameObject.transform.position + transform.forward * spawnDistance;
             var bullet = Instantiate(bulletPrefab, spawnPos, Quaternion.identity);
-            bullet.GetComponent<BulletBase>().setUpBall(transform.forward);
+            bullet.GetComponent<BulletBase>().setUpBall(transform.forward, gameObject.tag);
 
             //push player back
             //var pm = GetComponent<MovementWithNavMesh>();
             //float bb = bullet.GetComponent<BulletBase>().BlowBack;
-            //pm.PushPlayerBack(bb);
+            //pm.PushPlayerBack(bb); 
         }
     }
 

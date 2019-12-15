@@ -74,6 +74,7 @@
     <Compile Include="Assets\Scripts\Camera\CameraBase.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraFollowPerspective.cs" />
+    <Compile Include="Assets\Scripts\Camera\CameraFollowV2.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraShake.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyBase.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyController.cs" />

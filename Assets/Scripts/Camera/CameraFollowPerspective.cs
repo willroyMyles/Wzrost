@@ -8,8 +8,8 @@ public class CameraFollowPerspective : CameraBase
 
     protected float originalY, originalZ;
     Vector3 centerPoint;
-    float minZoom = 30f;
-    float maxZoom = 70f;
+    float minZoom = 45f;
+    float maxZoom = 72f;
     float zoomBuffer = 35f;
 
     private new void Start()
@@ -28,36 +28,21 @@ public class CameraFollowPerspective : CameraBase
 
     protected new void Move()
     {
-        if (targets.Count <= 1)
-        {
-            desiredPosition = player.localPosition + offset;
-            //desiredPosition.y = originalY;
-            Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed * Time.deltaTime);
-            transform.position = smoothedPosition;
-        }
-        else
-        {
-            centerPoint = base.FindAveragePosition();
-            var newPosition = centerPoint + offset;
-            //desiredPosition.y = originalY;
-            transform.position = Vector3.Lerp(transform.position, newPosition, smoothSpeed * Time.deltaTime);
+ 
+            var pos = FindAveragePosition() + offset;
+            transform.position = Vector3.Lerp(transform.position, pos, smoothSpeed * Time.deltaTime);
 
-        }
     }
 
     protected new void Zoom()
     {
-        if( targets.Count <= 1)
-        {
-            float zoomDistance = Mathf.Lerp(maxZoom, minZoom, .02f);
-            cam.fieldOfView = zoomDistance;
-        }
-        else
-        {
-            var distance = getGreatestDistance();
-            float zoomDistance = Mathf.Lerp(maxZoom, minZoom, (distance-zoomBuffer) / maxZoom);
-            cam.fieldOfView = zoomDistance;
-        }
+
+        float zoomDistance;
+        if( targets.Count <= 1)       zoomDistance = Mathf.Lerp(maxZoom, minZoom, Global.Instance().playerPreferredZoomLevel);
+        else                          zoomDistance = Mathf.Lerp(minZoom, maxZoom, getGreatestDistance() / Global.Instance().playerDectecionSphereLookRadius);
+        
+        cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, zoomDistance, smoothSpeed * Time.deltaTime);
+
     }
 
 
@@ -77,19 +62,16 @@ public class CameraFollowPerspective : CameraBase
 
     protected new Vector3 FindAveragePosition()
     {
-        var bounds = new Bounds(targets[0].transform.position, Vector3.zero);
-        //var bounds = new Bounds();
-
         checkForNullTargets();
+        var vec = player.localPosition;
 
-
-        for (int i = 0; i < targets.Count; i++)
+        foreach(var obj in targets)
         {
-            if(targets[i] != null) bounds.Encapsulate(targets[i].transform.position);
+            vec += obj.transform.position;
         }
 
-        return bounds.center;
-        
+        vec /= targets.Count + 1;
+        return vec;
     }
 
 

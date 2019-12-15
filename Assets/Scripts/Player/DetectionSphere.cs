@@ -5,7 +5,7 @@ using UnityEngine;
 public class DetectionSphere : MonoBehaviour
 {
 
-    float lookRadius = 15f;
+    
     bool drawGizmos = true;
     CameraBase cf;
 
@@ -17,24 +17,25 @@ public class DetectionSphere : MonoBehaviour
         if (Camera.allCameras[0].orthographic) cf = FindObjectOfType<CameraFollow>();
         else cf = FindObjectOfType<CameraFollowPerspective>();
         cf.AddToList(gameObject);
+
+        var collider = GetComponent<SphereCollider>();
+        collider.radius = Global.Instance().playerDectecionSphereLookRadius;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(gameObject.tag == "Player")
-        {
+      
             //position camera to view both players
            if(other.gameObject.tag == "Enemy") cf.AddToList(other.gameObject);
-        }
+        
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (gameObject.tag == "Player")
-        {
+
             //position camera to view both players
             if (other.gameObject.tag == "Enemy") cf.removeFromList(other.gameObject);
-        }
+        
     }
 
     private void OnDrawGizmos()
@@ -42,7 +43,7 @@ public class DetectionSphere : MonoBehaviour
         if (drawGizmos)
         {
             Gizmos.color = new Color(.1f, .25f, 1, .2f);
-            Gizmos.DrawSphere(transform.position, lookRadius);
+            Gizmos.DrawSphere(transform.position, Global.Instance().playerDectecionSphereLookRadius);
         }
     }
 }

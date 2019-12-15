@@ -6,9 +6,13 @@ public class Global : MonoBehaviour
 {
     #region singleton
 
-    public Global instance()
+    private static Global instance;
+
+    public static Global Instance()
     {
-        return this;
+        if (instance == null) instance = FindObjectOfType<Global>();
+        instance.findObjects();
+        return instance;
     }
 
 
@@ -16,19 +20,42 @@ public class Global : MonoBehaviour
 
     #region variables 
 
-    GameObject flag;
-    GameObject plane;
+    internal GameObject flag;
+    internal GameObject plane;
+    internal GameObject player;
     public GameObject enemyPrefab;
     public GameObject bulletPrefab;
+
+    internal Camera mainCamera;
+    internal List<GameObject> objectsInPlayerSpace = new List<GameObject>();
+
+    internal float cameraMovementSpeed = 4;
+    internal float cameraMovementDamp = .2f;
+    internal float playerDectecionSphereLookRadius = 15f;
+    internal float playerPreferredZoomLevel = .02f; // 0 - max, 1-min 
 
 
     private void Awake()
     {
-        flag = GameObject.Find("flag");
-        plane = GameObject.Find("Plane");
+        instance = this;
+        if (instance == null) instance = FindObjectOfType<Global>();
+        instance.findObjects();
     }
 
     #endregion
+
+    private void Start()
+    {
+        findObjects();
+    }
+
+    public void findObjects()
+    {
+        flag = GameObject.Find("flag");
+        plane = GameObject.Find("Plane");
+        player = GameObject.Find("rollyNavMesh");
+        mainCamera = Camera.allCameras[0];
+    }
 
     #region statistics
 

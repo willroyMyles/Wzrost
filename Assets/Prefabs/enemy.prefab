@@ -355,6 +355,7 @@ GameObject:
   - component: {fileID: 1769746067691760261}
   - component: {fileID: 2469159334615825647}
   - component: {fileID: 8186517317829963360}
+  - component: {fileID: 3478675944100213607}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Enemy
@@ -453,6 +454,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &3478675944100213607
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3357034497697859445}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1.0000001}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3625836117253833089
 GameObject:
   m_ObjectHideFlags: 0

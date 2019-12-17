@@ -34,6 +34,10 @@ public class Global : MonoBehaviour
     internal float playerDectecionSphereLookRadius = 15f;
     internal float playerPreferredZoomLevel = .02f; // 0 - max, 1-min 
 
+    internal List<GameObject> opponentsWithinSphere = new List<GameObject>();
+
+    internal bool playerWithinDistanceToAim = false;
+
 
     private void Awake()
     {

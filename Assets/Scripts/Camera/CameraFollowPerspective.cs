@@ -28,21 +28,16 @@ public class CameraFollowPerspective : CameraBase
 
     protected new void Move()
     {
- 
             var pos = FindAveragePosition() + offset;
             transform.position = Vector3.Lerp(transform.position, pos, smoothSpeed * Time.deltaTime);
-
     }
 
     protected new void Zoom()
     {
-
         float zoomDistance;
         if( targets.Count <= 1)       zoomDistance = Mathf.Lerp(maxZoom, minZoom, Global.Instance().playerPreferredZoomLevel);
         else                          zoomDistance = Mathf.Lerp(minZoom, maxZoom, getGreatestDistance() / Global.Instance().playerDectecionSphereLookRadius);
-        
         cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, zoomDistance, smoothSpeed * Time.deltaTime);
-
     }
 
 
@@ -50,27 +45,28 @@ public class CameraFollowPerspective : CameraBase
     private float getGreatestDistance()
     {
         var bounds = new Bounds(targets[0].transform.position, Vector3.zero);
-        //var bounds = new Bounds();
-        checkForNullTargets();
+   
 
-        for (int i = 0; i < targets.Count; i++)
+        for (int i = 0; i < Global.Instance().opponentsWithinSphere.Count; i++)
         {
-            if (targets[i] != null) bounds.Encapsulate(targets[i].transform.position);
+            if ( Global.Instance().opponentsWithinSphere[i] != null) bounds.Encapsulate(Global.Instance().opponentsWithinSphere[i].transform.position);
         }
         return bounds.size.x;
     }
 
     protected new Vector3 FindAveragePosition()
     {
-        checkForNullTargets();
         var vec = player.localPosition;
+        int amount = 0;
 
-        foreach(var obj in targets)
+        foreach(var obj in Global.Instance().opponentsWithinSphere)
         {
-            vec += obj.transform.position;
+            if (obj == null) vec += Vector3.zero;
+            else vec += obj.transform.position;
+            amount++;
         }
 
-        vec /= targets.Count + 1;
+        vec /= amount + 1;
         return vec;
     }
 

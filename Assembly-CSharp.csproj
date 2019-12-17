@@ -85,6 +85,8 @@
     <Compile Include="Assets\Scripts\General\Global.cs" />
     <Compile Include="Assets\Scripts\General\SpawnController.cs" />
     <Compile Include="Assets\Scripts\Interactable\InteractableBase.cs" />
+    <Compile Include="Assets\Scripts\Interactable\InteractableWeapon.cs" />
+    <Compile Include="Assets\Scripts\Player\AimController.cs" />
     <Compile Include="Assets\Scripts\Player\DetectionSphere.cs" />
     <Compile Include="Assets\Scripts\Player\FireController.cs" />
     <Compile Include="Assets\Scripts\Player\MovementWithNavMesh.cs" />

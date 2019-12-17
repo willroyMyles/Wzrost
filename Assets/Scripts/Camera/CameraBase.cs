@@ -52,7 +52,7 @@ public class CameraBase : MonoBehaviour
     {
         var desieredLocalPosition = transform.InverseTransformPoint(desiredPosition);
         float size = 0;
-        for (int i = 0; i < targets.Count; i++)
+        for (int i = 0; i < Global.Instance().opponentsWithinSphere.Count; i++)
         {
             var targetLocalPosition = transform.InverseTransformPoint(targets[i].transform.position);
             var desieredPosToTarget = targetLocalPosition - desieredLocalPosition;
@@ -86,9 +86,9 @@ public class CameraBase : MonoBehaviour
 
     protected void checkForNullTargets()
     {
-        foreach (var obj in targets)
+        foreach (var obj in Global.Instance().opponentsWithinSphere)
         {
-            if (obj == null) targets.Remove(obj);
+            if (obj == null) Global.Instance().opponentsWithinSphere.Remove(obj);
         }
 
     }
@@ -98,12 +98,9 @@ public class CameraBase : MonoBehaviour
         var avgPos = new Vector3();
         int numOfTargets = 0; // replace number with target.count
 
-        //check if gameobjects are still alive
-        checkForNullTargets();
-
-        for (int i = 0; i < targets.Count; i++)
+        for (int i = 0; i < Global.Instance().opponentsWithinSphere.Count; i++)
         {
-            avgPos += targets[i].transform.position;
+            avgPos += Global.Instance().opponentsWithinSphere[i].transform.position;
             numOfTargets++;
         }
 
@@ -117,12 +114,12 @@ public class CameraBase : MonoBehaviour
 
     public void AddToList(GameObject other)
     {
-        if(!targets.Contains(other)) targets.Add(other);
+        if(!Global.Instance().opponentsWithinSphere.Contains(other)) targets.Add(other);
     }
 
     public void removeFromList(GameObject other)
     {
-        targets.Remove(other);
+        Global.Instance().opponentsWithinSphere.Remove(other);
     }
 
     #endregion

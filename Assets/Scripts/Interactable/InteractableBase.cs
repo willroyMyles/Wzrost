@@ -100,7 +100,7 @@ public class InteractableBase : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "Interactor" || other.gameObject.tag == "Enemy")
+        if (other.gameObject.tag == "Interactor" /*|| other.gameObject.tag == "Enemy"*/)
         {
             currentDistance = Vector3.Distance(gameObject.transform.position, other.gameObject.transform.position);
             if(currentDistance < this.distance)

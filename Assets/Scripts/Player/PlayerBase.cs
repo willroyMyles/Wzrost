@@ -83,6 +83,7 @@ public class PlayerBase : MonoBehaviour
     public void die()
     {
         Debug.Log("im dead damit!");
+        if (Global.Instance().opponentsWithinSphere.Contains(gameObject)) Global.Instance().opponentsWithinSphere.Remove(gameObject);
         Destroy(gameObject);
         this.enabled = false;
     }

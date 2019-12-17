@@ -64,16 +64,21 @@ public class BulletBase : MonoBehaviour
             Destroy(gameObject);
         }
 
+        if(collision.gameObject.tag == "artillary")
+        {
+            damage -= damageFallOff;
+            velocity = gameObject.transform.forward * bulletSpeed * speedincrease;
+            GetComponent<Rigidbody>().velocity = velocity;
+            Destroy(gameObject);
+        }
+
     }
 
     private void OnCollisionExit(Collision collision)
     {
         if(isDefelectable)
         {
-            damage -= damageFallOff;
-            velocity = gameObject.transform.forward * bulletSpeed * speedincrease;
-            GetComponent<Rigidbody>().velocity = velocity;
-            Destroy(gameObject);
+           
         }
         
     }

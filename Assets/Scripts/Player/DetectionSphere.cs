@@ -16,7 +16,7 @@ public class DetectionSphere : MonoBehaviour
     {
         if (Camera.allCameras[0].orthographic) cf = FindObjectOfType<CameraFollow>();
         else cf = FindObjectOfType<CameraFollowPerspective>();
-        cf.AddToList(gameObject);
+        Global.Instance().opponentsWithinSphere.Add(gameObject);
 
         var collider = GetComponent<SphereCollider>();
         collider.radius = Global.Instance().playerDectecionSphereLookRadius;
@@ -26,16 +26,18 @@ public class DetectionSphere : MonoBehaviour
     {
       
             //position camera to view both players
-           if(other.gameObject.tag == "Enemy") cf.AddToList(other.gameObject);
-        
+           if(other.gameObject.tag == "Enemy") Global.Instance().opponentsWithinSphere.Add(other.gameObject);
+           if (Global.Instance().opponentsWithinSphere.Count > 1) Global.Instance().playerWithinDistanceToAim = true;
+
     }
 
     private void OnTriggerExit(Collider other)
     {
 
             //position camera to view both players
-            if (other.gameObject.tag == "Enemy") cf.removeFromList(other.gameObject);
-        
+            if (other.gameObject.tag == "Enemy") Global.Instance().opponentsWithinSphere.Remove(other.gameObject);
+            if (Global.Instance().opponentsWithinSphere.Count <= 1) Global.Instance().playerWithinDistanceToAim = false;
+
     }
 
     private void OnDrawGizmos()

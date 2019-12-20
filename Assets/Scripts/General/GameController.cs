@@ -3,6 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+public enum TeamNumber
+{
+    Default,
+    One,
+    Two,
+    Three,
+    Four
+}
 public class GameController : MonoBehaviour
 {
     public GameObject ground;
@@ -18,7 +26,13 @@ public class GameController : MonoBehaviour
     {
         playgroundSize = ground.GetComponent<MeshRenderer>().bounds.size;
         ground.GetComponent<NavMeshSurface>().BuildNavMesh();
-        if(enemyPrefab != null) GetComponent<SpawnController>().spawnEnemies(enemyPrefab, amountOfEnemies);
+        if (enemyPrefab != null)
+        {
+            //GetComponent<SpawnController>().spawnEnemies(enemyPrefab, amountOfEnemies);
+            GetComponent<SpawnController>().spawnTeam(3);
+            GetComponent<SpawnController>().spawnEnemyTeam(4);
+        }
+        Global.Instance().player.GetComponent<PlayerBase>().assignTeamNumber(Global.Instance().myTeamNumber);
     }
 
     // Update is called once per frame

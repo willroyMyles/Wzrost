@@ -54,10 +54,8 @@ public class InteractableBase : MonoBehaviour
 
     public void setIsPickedUp(bool val)
     {
-
             IsPickedUp = val;
             group.alpha = 0;
-   
     }
 
     // Update is called once per frame

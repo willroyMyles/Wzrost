@@ -41,7 +41,7 @@ public class FireController : MonoBehaviour
             coolDownTime = 0;
             fire = false;
         }
-        if (Input.GetMouseButtonDown(0)) Fire();
+       // if (Input.GetMouseButtonDown(0)) Fire();
     }
 
     public void Fire()

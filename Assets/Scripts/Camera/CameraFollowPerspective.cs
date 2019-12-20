@@ -6,8 +6,6 @@ using UnityEngine;
 public class CameraFollowPerspective : CameraBase
 {
 
-    protected float originalY, originalZ;
-    Vector3 centerPoint;
     float minZoom = 45f;
     float maxZoom = 72f;
     float zoomBuffer = 35f;
@@ -16,8 +14,6 @@ public class CameraFollowPerspective : CameraBase
     {
         offset = transform.position - player.position;
         cam = Camera.allCameras[0] ;
-        originalY = offset.y;
-        originalZ = offset.z;
     }
 
     private void LateUpdate()
@@ -35,7 +31,7 @@ public class CameraFollowPerspective : CameraBase
     protected new void Zoom()
     {
         float zoomDistance;
-        if( targets.Count <= 1)       zoomDistance = Mathf.Lerp(maxZoom, minZoom, Global.Instance().playerPreferredZoomLevel);
+        if (Global.Instance().opponentsWithinSphere.Count <= 1)       zoomDistance = Mathf.Lerp(maxZoom, minZoom, Global.Instance().playerPreferredZoomLevel);
         else                          zoomDistance = Mathf.Lerp(minZoom, maxZoom, getGreatestDistance() / Global.Instance().playerDectecionSphereLookRadius);
         cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, zoomDistance, smoothSpeed * Time.deltaTime);
     }
@@ -44,7 +40,7 @@ public class CameraFollowPerspective : CameraBase
 
     private float getGreatestDistance()
     {
-        var bounds = new Bounds(targets[0].transform.position, Vector3.zero);
+        var bounds = new Bounds(Global.Instance().opponentsWithinSphere[0].transform.position, Vector3.zero);
    
 
         for (int i = 0; i < Global.Instance().opponentsWithinSphere.Count; i++)

@@ -5,11 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public struct EnemyStats
-{
-    public float aggression;
-    
-}
+
 
 public class EnemyBase : PlayerBase
 {
@@ -23,8 +19,6 @@ public class EnemyBase : PlayerBase
     float maxShownTime = 2f;
 
     bool shouldShowCanves = false;
-
-    EnemyStats stats;
     
 
     new void  Start()  
@@ -40,7 +34,6 @@ public class EnemyBase : PlayerBase
         }
         image = GetComponentInChildren<Image>();
         group = canvas.GetComponent<CanvasGroup>();
-        stats.aggression = 1;
         text = GetComponentInChildren<TMPro.TextMeshProUGUI>();
         text.text = baseStats.hp.ToString();
     }

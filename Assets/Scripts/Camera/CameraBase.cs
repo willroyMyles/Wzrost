@@ -18,7 +18,6 @@ public class CameraBase : MonoBehaviour
     protected float zoomSpeed;
     protected Vector3 moveVelocity;
     protected Vector3 desiredPosition;
-    protected List<GameObject> targets = new List<GameObject>();
     protected Camera cam;
 
 
@@ -44,17 +43,20 @@ public class CameraBase : MonoBehaviour
 
     protected void Zoom()
     {
-        float requieredSize = FindRequiredSize();
+        float requieredSize = getGreatestDistance();
         cam.orthographicSize = Mathf.SmoothDamp(cam.orthographicSize, requieredSize, ref zoomSpeed, dampTime);
     }
 
     private float FindRequiredSize()
     {
+        if (Global.Instance().opponentsWithinSphere.Count <= 1) return Mathf.Lerp( Global.Instance().orthoMinZoom, Global.Instance().orthoMaxZoom, Global.Instance().playerPreferredZoomLevel);
+
         var desieredLocalPosition = transform.InverseTransformPoint(desiredPosition);
         float size = 0;
         for (int i = 0; i < Global.Instance().opponentsWithinSphere.Count; i++)
         {
-            var targetLocalPosition = transform.InverseTransformPoint(targets[i].transform.position);
+            if (Global.Instance().opponentsWithinSphere[i] == null) continue;
+            var targetLocalPosition = transform.InverseTransformPoint(Global.Instance().opponentsWithinSphere[i].transform.position);
             var desieredPosToTarget = targetLocalPosition - desieredLocalPosition;
 
 
@@ -67,61 +69,43 @@ public class CameraBase : MonoBehaviour
         return size;
     }
 
-    protected void Move()
+    private float getGreatestDistance()
     {
-        if (targets.Count <= 1)
-        {
-            desiredPosition = player.position + offset;
-            desiredPosition.y = .8f;
-            Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed * Time.deltaTime);
-            transform.position = smoothedPosition;
-        }
-        else
-        {
-            FindAveragePosition();
-            transform.position = Vector3.SmoothDamp(transform.position, desiredPosition, ref moveVelocity, dampTime);
+        if (Global.Instance().opponentsWithinSphere.Count <= 1) return Mathf.Lerp(Global.Instance().orthoMinZoom, Global.Instance().orthoMaxZoom, Global.Instance().playerPreferredZoomLevel);
 
+        var bounds = new Bounds(Global.Instance().opponentsWithinSphere[0].transform.position, Vector3.zero);
+
+
+        for (int i = 0; i < Global.Instance().opponentsWithinSphere.Count; i++)
+        {
+            if (Global.Instance().opponentsWithinSphere[i] != null) bounds.Encapsulate(Global.Instance().opponentsWithinSphere[i].transform.position);
         }
+        return bounds.size.x + 5;
     }
 
-    protected void checkForNullTargets()
+    protected void Move()
     {
-        foreach (var obj in Global.Instance().opponentsWithinSphere)
-        {
-            if (obj == null) Global.Instance().opponentsWithinSphere.Remove(obj);
-        }
-
+        var pos = FindAveragePosition() + offset;
+        transform.position = Vector3.Lerp(transform.position, pos, smoothSpeed * Time.deltaTime);
     }
 
     protected Vector3 FindAveragePosition()
     {
-        var avgPos = new Vector3();
-        int numOfTargets = 0; // replace number with target.count
+        var vec = player.localPosition;
+        int amount = 0;
 
-        for (int i = 0; i < Global.Instance().opponentsWithinSphere.Count; i++)
+        foreach (var obj in Global.Instance().opponentsWithinSphere)
         {
-            avgPos += Global.Instance().opponentsWithinSphere[i].transform.position;
-            numOfTargets++;
+            if (obj == null) vec += Vector3.zero;
+            else vec += obj.transform.position;
+            amount++;
         }
 
-        avgPos /= numOfTargets;
-        desiredPosition = avgPos;
-        return avgPos;
+        vec /= amount + 1;
+        return vec;
     }
     #endregion
 
-    #region external functions
 
-    public void AddToList(GameObject other)
-    {
-        if(!Global.Instance().opponentsWithinSphere.Contains(other)) targets.Add(other);
-    }
-
-    public void removeFromList(GameObject other)
-    {
-        Global.Instance().opponentsWithinSphere.Remove(other);
-    }
-
-    #endregion
 
 }

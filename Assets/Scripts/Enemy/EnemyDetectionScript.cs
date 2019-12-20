@@ -12,14 +12,25 @@ public class EnemyDetectionScript : MonoBehaviour
         GetComponent<SphereCollider>().radius = lookRadius;
     }
 
+    private void addObjectsToSphere(GameObject obj)
+    {
+        listOfObjectInSphere.Add(obj);
+    }
+
+    private void removeObjectsFromSphere(GameObject obj)
+    {
+        listOfObjectInSphere.Remove(obj);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.transform.parent == transform.parent) return;
+        if (listOfObjectInSphere.Contains(other.gameObject)) return;
         if(other.gameObject.tag == "Player" || other.gameObject.tag == "Enemy")
         {
             if (!listOfObjectInSphere.Contains(other.gameObject))
             {
-                if(other.gameObject != gameObject) listOfObjectInSphere.Add(other.gameObject);
+                if (other.gameObject != gameObject) addObjectsToSphere(other.gameObject);
                 transform.parent.GetComponent<EnemyController>().startFight(listOfObjectInSphere);
             }
         }
@@ -32,7 +43,7 @@ public class EnemyDetectionScript : MonoBehaviour
         {
             if (listOfObjectInSphere.Contains(other.gameObject))
             {
-                listOfObjectInSphere.Remove(other.gameObject);
+                removeObjectsFromSphere(other.gameObject);
                 transform.parent.GetComponent<EnemyController>().startFight(listOfObjectInSphere);
 
             }

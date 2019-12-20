@@ -12,7 +12,7 @@ public class CameraFollow : CameraBase
     private void LateUpdate()
     {
         Move();
-        Zoom();
+        //Zoom();
     }
 
 }

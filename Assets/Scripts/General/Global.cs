@@ -19,24 +19,47 @@ public class Global : MonoBehaviour
     #endregion
 
     #region variables 
-
+    //general 
     internal GameObject flag;
     internal GameObject plane;
     internal GameObject player;
     public GameObject enemyPrefab;
     public GameObject bulletPrefab;
+    internal Vector3 mySectorSize;
+    internal Vector3 middleSectorSize;
+    internal Vector3 enemySectorSize;
 
+    internal Vector3 enemyFlagPosition;
+    internal Vector3 teamFlagPosition;
+
+    //camera
     internal Camera mainCamera;
-    internal List<GameObject> objectsInPlayerSpace = new List<GameObject>();
-
     internal float cameraMovementSpeed = 4;
     internal float cameraMovementDamp = .2f;
-    internal float playerDectecionSphereLookRadius = 15f;
     internal float playerPreferredZoomLevel = .02f; // 0 - max, 1-min 
+    internal float orthoMaxZoom = 23f;
+    internal float orthoMinZoom = 10f;
 
+    //player
+    internal List<GameObject> objectsInPlayerSpace = new List<GameObject>();
+    internal float playerDectecionSphereLookRadius = 15f;
     internal List<GameObject> opponentsWithinSphere = new List<GameObject>();
-
     internal bool playerWithinDistanceToAim = false;
+    internal bool playerAttackEquipped = false;
+    internal bool playerDefenseEquipped = false;
+    internal bool playerFlagEquipped = false;
+    internal TeamNumber myTeamNumber = TeamNumber.One;
+
+    //team?
+    internal float amountOfPeopleOnTeam = 4;
+    internal float defaultPeopleOnTeam = 3;
+    internal Color teamColor = Color.blue;
+
+
+
+    internal Joystick joystick;
+
+
 
 
     private void Awake()
@@ -59,6 +82,7 @@ public class Global : MonoBehaviour
         plane = GameObject.Find("Plane");
         player = GameObject.Find("rollyNavMesh");
         mainCamera = Camera.allCameras[0];
+        joystick = GetComponentInChildren<Joystick>();
     }
 
     #region statistics

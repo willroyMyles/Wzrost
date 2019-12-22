@@ -20,11 +20,16 @@ public class Global : MonoBehaviour
 
     #region variables 
     //general 
+    public GameObject enemyPrefab;
+    public GameObject bulletPrefab;
+    public GameObject flagPrefab;
+    public GameObject playerPrefab;
+
+
     internal GameObject flag;
     internal GameObject plane;
     internal GameObject player;
-    public GameObject enemyPrefab;
-    public GameObject bulletPrefab;
+    internal Vector3 playgroundSize;
     internal Vector3 mySectorSize;
     internal Vector3 middleSectorSize;
     internal Vector3 enemySectorSize;
@@ -51,9 +56,10 @@ public class Global : MonoBehaviour
     internal TeamNumber myTeamNumber = TeamNumber.One;
 
     //team?
-    internal float amountOfPeopleOnTeam = 4;
-    internal float defaultPeopleOnTeam = 3;
+    internal int amountOfPeopleOnTeam = 4;
+    internal int defaultPeopleOnTeam = 3;
     internal Color teamColor = Color.blue;
+    internal List<GameObject> playersOnTeam = new List<GameObject>();
 
 
 
@@ -80,9 +86,8 @@ public class Global : MonoBehaviour
     {
         flag = GameObject.Find("flag");
         plane = GameObject.Find("Plane");
-        player = GameObject.Find("rollyNavMesh");
+        player = GameObject.Find("trill");
         mainCamera = Camera.allCameras[0];
-        joystick = GetComponentInChildren<Joystick>();
     }
 
     #region statistics

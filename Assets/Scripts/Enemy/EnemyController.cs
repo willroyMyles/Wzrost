@@ -16,10 +16,10 @@ public class EnemyController : MonoBehaviour
     float lookradiius = 5f;
 
     GameController gameController;
-    bool canMove = true;
-    bool shouldFight = false;
+    [SerializeField] bool canMove = true;
+    [SerializeField] bool shouldFight = false;
     private NavMeshAgent agent;
-    List<GameObject> fightList;
+    [SerializeField] List<GameObject> fightList;
     EnemyStats stats;
     // Start is called before the first frame update
     void Start()
@@ -33,7 +33,7 @@ public class EnemyController : MonoBehaviour
 
     Vector3 GetRandompointOnPlane()
     {
-        var point = gameController.PlaygroundSize;
+        var point = Global.Instance().playgroundSize;
         point.x = UnityEngine.Random.Range(0, point.x / 2);
         point.z = UnityEngine.Random.Range(0, point.z / 2);
         return point/50;
@@ -46,6 +46,7 @@ public class EnemyController : MonoBehaviour
         {
             agent.transform.position = agent.nextPosition;
             agent.transform.LookAt(agent.nextPosition);
+            if (agent.transform.position == agent.nextPosition && agent.isStopped) agent.isStopped = false; 
             //patrol
             if (!agent.pathPending && agent.remainingDistance < 1f)
             {
@@ -62,6 +63,13 @@ public class EnemyController : MonoBehaviour
             foreach(var en in fightList)
             {
                 float health;
+                if(en == null)
+                {
+                    fightList.Remove(en);
+                    shouldFight = false;
+                    agent.isStopped = false;
+                    return;
+                }
                 if(en.tag == "Player") health = en.transform.parent.GetComponent<PlayerBase>().Hp;
                 else health = en.transform.parent.GetComponent<EnemyBase>().Hp;
                 if (lowestHealthEnemy > health)
@@ -72,6 +80,7 @@ public class EnemyController : MonoBehaviour
             } 
             //faceEnemy
             if(obj != null) agent.transform.LookAt(obj.transform.position);
+           
 
             //check aggreesion
             if (stats.aggression < .5f)
@@ -103,7 +112,7 @@ public class EnemyController : MonoBehaviour
 
     public void startFight(List<GameObject> list)
     {
-        
+        //set agent to fight instead of stopping
         
         fightList = list;
         if(list.Count > 0)

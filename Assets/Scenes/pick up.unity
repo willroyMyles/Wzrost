@@ -221,6 +221,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3345638600634476668, guid: 688fa73cca3899f4c850bcbfbd4bbeb9,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 02c9061ed5e28b64ea22206b9d02f4a1, type: 2}
     - target: {fileID: 4293322877249811675, guid: 688fa73cca3899f4c850bcbfbd4bbeb9,
         type: 3}
       propertyPath: m_Sprite
@@ -432,6 +437,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1554838032, guid: 24a9fa12bddb5ea47aed5f5baf813686, type: 3}
+      propertyPath: m_Name
+      value: mainCanvas
+      objectReference: {fileID: 0}
     - target: {fileID: 7348926269059918304, guid: 24a9fa12bddb5ea47aed5f5baf813686,
         type: 3}
       propertyPath: m_Name
@@ -824,7 +833,7 @@ PrefabInstance:
     - target: {fileID: 6976848688493185124, guid: 8c57a6c8e38cb0241a448beeb98e1e65,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6976848688493185125, guid: 8c57a6c8e38cb0241a448beeb98e1e65,
         type: 3}
@@ -844,12 +853,12 @@ PrefabInstance:
     - target: {fileID: 6976848688552900422, guid: 8c57a6c8e38cb0241a448beeb98e1e65,
         type: 3}
       propertyPath: orthographic size
-      value: 19.54
+      value: 11.3
       objectReference: {fileID: 0}
     - target: {fileID: 6976848688552900427, guid: 8c57a6c8e38cb0241a448beeb98e1e65,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c57a6c8e38cb0241a448beeb98e1e65, type: 3}

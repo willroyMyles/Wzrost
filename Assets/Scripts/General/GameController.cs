@@ -33,6 +33,7 @@ public class GameController : MonoBehaviour
             GetComponent<SpawnController>().spawnEnemyTeam(4);
         }
         Global.Instance().player.GetComponent<PlayerBase>().assignTeamNumber(Global.Instance().myTeamNumber);
+        Global.Instance().playersOnTeam.Add(Global.Instance().player);
     }
 
     // Update is called once per frame

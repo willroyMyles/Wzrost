@@ -9,6 +9,7 @@ TagManager:
   - Interactable
   - Interactor
   - Bandana
+  - Eyes
   layers:
   - Default
   - TransparentFX

@@ -26,7 +26,7 @@ public class DetectionSphere : MonoBehaviour
     {
       
             //position camera to view both players
-           if(other.gameObject.tag == "Enemy") Global.Instance().opponentsWithinSphere.Add(other.gameObject);
+           if(other.gameObject.tag == "Enemy" && !other.gameObject.transform.parent.GetComponent<EnemyBase>().isOnTeam) Global.Instance().opponentsWithinSphere.Add(other.gameObject);
            if (Global.Instance().opponentsWithinSphere.Count > 1) Global.Instance().playerWithinDistanceToAim = true;
 
     }
@@ -35,7 +35,7 @@ public class DetectionSphere : MonoBehaviour
     {
 
             //position camera to view both players
-            if (other.gameObject.tag == "Enemy") Global.Instance().opponentsWithinSphere.Remove(other.gameObject);
+            if (other.gameObject.tag == "Enemy" && !other.gameObject.transform.parent.GetComponent<EnemyBase>().isOnTeam) Global.Instance().opponentsWithinSphere.Remove(other.gameObject);
             if (Global.Instance().opponentsWithinSphere.Count <= 1) Global.Instance().playerWithinDistanceToAim = false;
 
     }

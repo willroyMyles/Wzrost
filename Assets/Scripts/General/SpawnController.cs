@@ -43,6 +43,17 @@ public class SpawnController : MonoBehaviour
             var pos = center + new Vector3(UnityEngine.Random.Range(-size.x / divisionFactor, size.x / divisionFactor), 4f, UnityEngine.Random.Range(-size.z / divisionFactor, size.z / divisionFactor));
             var en = Instantiate(Global.Instance().enemyPrefab, pos, Quaternion.identity);
             en.GetComponent<EnemyBase>().assignTeamNumber(Global.Instance().myTeamNumber);
+            Global.Instance().playersOnTeam.Add(en);
+        }
+    }
+
+    internal void spawnTeam(int v, Vector3 pos)
+    {
+        for (int i = 0; i < v; i++)
+        {
+            var en = Instantiate(Global.Instance().enemyPrefab, pos, Quaternion.identity);
+            en.GetComponent<EnemyBase>().assignTeamNumber(Global.Instance().myTeamNumber);
+            Global.Instance().playersOnTeam.Add(en);
         }
     }
 

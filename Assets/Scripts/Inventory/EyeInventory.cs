@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
-
+[Serializable]
 public class EyeInventory : MonoBehaviour
 {
 
@@ -21,6 +21,8 @@ public class EyeInventory : MonoBehaviour
 
         // look into asset bundle later
         getInventoryFromFolder();
+        cc = FindObjectOfType<CustomizeController>();
+
     }
 
     private void getInventoryFromFolder()
@@ -59,9 +61,8 @@ public class EyeInventory : MonoBehaviour
         btn.onClick.AddListener(delegate { replaceEyes(eyePrefab);  } );
     }
 
-    void replaceEyes(GameObject eyePrefab)
+    void replaceEyes(GameObject eyePrefab, bool shouldSave = true)
     {
-        cc = FindObjectOfType<CustomizeController>();
         if (eyesObject == null) eyesObject = cc.getEyesObject();
         var trans = eyesObject.transform;
       
@@ -70,20 +71,37 @@ public class EyeInventory : MonoBehaviour
         // let x be zero
         myEye.transform.position = new Vector3(0, myEye.transform.position.y, myEye.transform.position.z);
         myEye.transform.parent = trans.parent;
-
         DestroyImmediate(eyesObject, true);
         eyesObject = null;
-        //save prefab
-        savePrefab();
+
+        if (shouldSave)
+        {
+        var mods = cc.player.GetComponentInChildren<PlayerBase>().mod;
+            if (mods != null)
+            {
+                mods.eyes.changePart(myEye);
+                mods.eyes.Type = ModificationType.Eyes;
+                saveModifications(mods);
+            }
+        }
     }
 
-    private void savePrefab()
+    public static void loadEyesModification(Modifications mod)
     {
-        var player = cc.getPlayer();
-        var name = player.name.Replace("(Clone)", "");
-        bool success;
-        PrefabUtility.SaveAsPrefabAsset(player, "Assets/Resources/Player/"+ name+".prefab", out success);
-        if (success) Debug.Log("saved");
-        else Debug.Log("Error");
+        var eyesInterchangable = mod.eyes;
+
     }
+
+    private void saveModifications(Modifications mods)
+    {
+        Global.Save(mods, cc.player.name.Replace("(Clone)", ""));
+        //Global.Save<float>(1.2f, "float");
+    }
+
+    private void loadModifications()
+    {
+        var mods = Global.Load<Modifications>(cc.player.name.Replace("(Clone)", ""));
+    }
+
+
 }

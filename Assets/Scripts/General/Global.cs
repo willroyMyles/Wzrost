@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
+using System.Runtime.Serialization.Formatters.Binary;
 
 public class Global : MonoBehaviour
 {
@@ -10,8 +12,11 @@ public class Global : MonoBehaviour
 
     public static Global Instance()
     {
-        if (instance == null) instance = FindObjectOfType<Global>();
-        instance.findObjects();
+        if (instance == null)
+        {
+            instance = FindObjectOfType<Global>();
+            instance.findObjects();
+        }
         return instance;
     }
 
@@ -23,12 +28,20 @@ public class Global : MonoBehaviour
     public GameObject enemyPrefab;
     public GameObject bulletPrefab;
     public GameObject flagPrefab;
-    public GameObject playerPrefab;
+    public GameObject playerPrefab1;
+    public GameObject playerPrefab2;
+    public GameObject playerPrefab3;
+    public GameObject playerPrefab4;
 
 
     internal GameObject flag;
     internal GameObject plane;
-    internal GameObject player;
+    internal GameObject player1;
+    internal GameObject player2;
+    internal GameObject player3;
+    internal GameObject player4;
+    internal GameObject currentPlayer;
+
     internal Vector3 playgroundSize;
     internal Vector3 mySectorSize;
     internal Vector3 middleSectorSize;
@@ -44,6 +57,8 @@ public class Global : MonoBehaviour
     internal float playerPreferredZoomLevel = .02f; // 0 - max, 1-min 
     internal float orthoMaxZoom = 23f;
     internal float orthoMinZoom = 10f;
+    internal Vector3 defaultCameraPosition = new Vector3(0.32f, 14.33f, -10.4f);
+    internal float xAngle = 57f;
 
     //player
     internal List<GameObject> objectsInPlayerSpace = new List<GameObject>();
@@ -63,7 +78,6 @@ public class Global : MonoBehaviour
 
 
 
-    internal Joystick joystick;
 
 
 
@@ -79,15 +93,68 @@ public class Global : MonoBehaviour
 
     private void Start()
     {
-        findObjects();
     }
 
     public void findObjects()
     {
-        flag = GameObject.Find("flag");
-        plane = GameObject.Find("Plane");
-        player = GameObject.Find("trill");
+        //create player
+        setPlayer(Instantiate(playerPrefab1, playerPrefab1.transform.position, playerPrefab1.transform.rotation));
+        //retieve mods
+        if(SaveExists(player1.name.Replace("(Clone)", "")))
+        {
+            var mods = Load<Modifications>(player1.name.Replace("(Clone)", ""));
+            //load mods
+            Modder.ApplyMods(mods);
+        }
+
         mainCamera = Camera.allCameras[0];
+
+    }
+
+    public void setPlayer(GameObject p)
+    {
+        player1 = p;
+        currentPlayer = p;
+        var camscript = FindObjectOfType<CameraFollow>();
+        if (camscript != null)
+            camscript.assignPlayerToFollow();
+
+    }
+
+    public static void Save<T>(T obj, string key)
+    {
+        string path = Application.persistentDataPath + "/saves/";
+        Directory.CreateDirectory(path);
+        BinaryFormatter formatter = new BinaryFormatter();
+
+        using (FileStream fs = new FileStream(path + key + ".txt", FileMode.Create))
+        {
+            formatter.Serialize(fs, obj);
+            Debug.Log("Saved");
+        }
+
+    }
+
+    public static T Load<T>(string key)
+    {
+        string path = Application.persistentDataPath + "/saves/";
+        BinaryFormatter formatter = new BinaryFormatter();
+        T returnValue = default(T);
+        using (FileStream fs = new FileStream(path + key + ".txt", FileMode.Open))
+        {
+            returnValue = (T)formatter.Deserialize(fs);
+            Debug.Log("Loaded");
+
+        }
+
+        return returnValue;
+    }
+
+    public static bool SaveExists(string key)
+    {
+        string path = Application.persistentDataPath + "/saves/" + key + ".txt";
+        return File.Exists(path);
+
     }
 
     #region statistics

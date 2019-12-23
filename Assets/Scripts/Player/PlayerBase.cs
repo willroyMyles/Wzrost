@@ -10,7 +10,7 @@ public class PlayerBase : MonoBehaviour
 {
 
     internal CameraShake cameraShake;
-
+    [SerializeField] public Modifications mod;
 
     float damage = 0;
     float changeTime = 3;

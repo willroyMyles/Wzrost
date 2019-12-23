@@ -7,7 +7,7 @@ public class CustomizeController : MonoBehaviour
 {
 
     public Canvas canvas;
-    internal GameObject player;
+    [SerializeField] internal GameObject player;
     internal GameObject eyesObject;
     Camera cam;
 
@@ -25,8 +25,12 @@ public class CustomizeController : MonoBehaviour
 
     private void setUp()
     {
-        player = Instantiate(Global.Instance().playerPrefab, Global.Instance().playerPrefab.transform.position, Global.Instance().playerPrefab.transform.rotation);
-        Global.Instance().player = player;
+        if (Global.Instance().player1 == null)
+        {
+            player = Instantiate(Global.Instance().playerPrefab1, Global.Instance().playerPrefab1.transform.position, Global.Instance().playerPrefab1.transform.rotation);
+            Global.Instance().setPlayer(player);
+        }
+        else player = Global.Instance().currentPlayer;
         cam = Global.Instance().mainCamera;
         var grps = canvas.GetComponentsInChildren<CanvasGroup>();
         g1 = grps[0];
@@ -38,6 +42,7 @@ public class CustomizeController : MonoBehaviour
 
     public GameObject getEyesObject()
     {
+        if (player == null) player = Global.Instance().currentPlayer;
         var objs = player.transform.GetChild(0).GetChild(0).GetChild(3).GetChild(0);
         return objs.gameObject;
     }
@@ -76,6 +81,11 @@ public class CustomizeController : MonoBehaviour
                 break;
             }
         }
+    }
+
+    internal GameObject getObject(string objectToGet)
+    {
+        throw new NotImplementedException();
     }
 
     IEnumerator moveCameraToEyes(float t)

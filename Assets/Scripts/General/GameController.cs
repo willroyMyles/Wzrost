@@ -24,6 +24,10 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        GetComponent<SpawnController>().spawnPlayer();
+
+
         playgroundSize = ground.GetComponent<MeshRenderer>().bounds.size;
         ground.GetComponent<NavMeshSurface>().BuildNavMesh();
         if (enemyPrefab != null)
@@ -32,8 +36,9 @@ public class GameController : MonoBehaviour
             GetComponent<SpawnController>().spawnTeam(3);
             GetComponent<SpawnController>().spawnEnemyTeam(4);
         }
-        Global.Instance().player.GetComponent<PlayerBase>().assignTeamNumber(Global.Instance().myTeamNumber);
-        Global.Instance().playersOnTeam.Add(Global.Instance().player);
+        Global.Instance().currentPlayer.GetComponent<PlayerBase>().assignTeamNumber(Global.Instance().myTeamNumber);
+        Global.Instance().playersOnTeam.Add(Global.Instance().currentPlayer);
+        FindObjectOfType<CameraBase>().assignPlayerToFollow();
     }
 
     // Update is called once per frame

@@ -32,6 +32,11 @@ public class SpawnController : MonoBehaviour
         }
     }
 
+    internal void spawnPlayer()
+    {
+        Global.Instance().setPlayer(Instantiate(Global.Instance().playerPrefab1));
+    }
+
     internal void spawnTeam(int v)
     {
         size = FindObjectOfType<GameController>().PlaygroundSize;

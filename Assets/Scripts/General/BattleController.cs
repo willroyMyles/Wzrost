@@ -15,7 +15,6 @@ public class BattleController : MonoBehaviour
     void Start()
     {
         setUp();
-
     }
 
     private void setUp()
@@ -48,8 +47,9 @@ public class BattleController : MonoBehaviour
         var enemyStartpoint = field3.transform.GetChild(0);
 
         //spawn in trill
-        var trill = Instantiate(Global.Instance().playerPrefab, playerStartpoint.transform.position, Global.Instance().playerPrefab.transform.rotation);
+        var trill = Instantiate(Global.Instance().playerPrefab1, playerStartpoint.transform.position, Global.Instance().playerPrefab1.transform.rotation);
         trill.GetComponent<PlayerBase>().assignTeamNumber(TeamNumber.One);
+        Global.Instance().setPlayer(trill);
 
         //spawn team
         GetComponent<SpawnController>().spawnTeam(Global.Instance().defaultPeopleOnTeam, playerStartpoint.transform.position);

@@ -5104,6 +5104,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34a216d2bc165c44ab97928027af7932, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mod:
+    eyes:
+      isEquipped: 0
+      prefabReference: 
+      type: 0
+    rightArm:
+      isEquipped: 0
+      prefabReference: 
+      type: 0
+    leftArm:
+      isEquipped: 0
+      prefabReference: 
+      type: 0
+    wheels:
+      isEquipped: 0
+      prefabReference: 
+      type: 0
+    shaft:
+      isEquipped: 0
+      prefabReference: 
+      type: 0
   headSpace: {fileID: 1442192331484351660}
   rightArmSpace: {fileID: 4705541803869566673}
   leftArmSpace: {fileID: 2927407931711101393}

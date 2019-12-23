@@ -28,17 +28,24 @@ public class CameraBase : MonoBehaviour
     #endregion
     #region internal functions
 
+    public void assignPlayerToFollow()
+    {
+        
+        cam = Global.Instance().mainCamera;
+        transform.position = Global.Instance().currentPlayer.transform.position;
+        transform.position += Global.Instance().defaultCameraPosition;
+        player = Global.Instance().currentPlayer.transform;
+        offset = transform.position - Global.Instance().currentPlayer.transform.position;
+    }
     protected void Start()
     {
-        cam = Camera.allCameras[0];
-        offset = transform.position - player.position;
+       // assignPlayerToFollow();
     }
 
 
     private void LateUpdate()
     {
-        Move();
-        Zoom();
+
     }
 
     protected void Zoom()
@@ -86,6 +93,7 @@ public class CameraBase : MonoBehaviour
     protected void Move()
     {
         var pos = FindAveragePosition() + offset;
+        transform.LookAt(Global.Instance().currentPlayer.transform);
         transform.position = Vector3.Lerp(transform.position, pos, smoothSpeed * Time.deltaTime);
     }
 

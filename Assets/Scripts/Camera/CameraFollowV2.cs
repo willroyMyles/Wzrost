@@ -10,7 +10,7 @@ public class CameraFollowV2 : MonoBehaviour
     
     private void Start()
     {
-        offset = transform.localPosition - Global.Instance().player.transform.position;
+        offset = transform.localPosition - Global.Instance().currentPlayer.transform.position;
     }
 
     private void LateUpdate()
@@ -37,7 +37,7 @@ public class CameraFollowV2 : MonoBehaviour
 
     private Vector3 findAveragePosition()
     {
-        var vec = Global.Instance().player.transform.position;
+        var vec = Global.Instance().currentPlayer.transform.position;
         foreach(var obj in Global.Instance().objectsInPlayerSpace)
         {
             vec += obj.transform.position;

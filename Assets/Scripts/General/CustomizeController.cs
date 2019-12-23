@@ -7,8 +7,8 @@ public class CustomizeController : MonoBehaviour
 {
 
     public Canvas canvas;
-    GameObject player;
-    GameObject eyesObject;
+    internal GameObject player;
+    internal GameObject eyesObject;
     Camera cam;
 
     Transform item;
@@ -26,19 +26,30 @@ public class CustomizeController : MonoBehaviour
     private void setUp()
     {
         player = Instantiate(Global.Instance().playerPrefab, Global.Instance().playerPrefab.transform.position, Global.Instance().playerPrefab.transform.rotation);
+        Global.Instance().player = player;
         cam = Global.Instance().mainCamera;
         var grps = canvas.GetComponentsInChildren<CanvasGroup>();
         g1 = grps[0];
         g2 = grps[1];
         g3 = grps[2];
 
-        var objs = player.GetComponentInChildren<Transform>();
-        foreach(Transform obj in objs)
-        {
-            if (obj.tag == "Eyes") eyesObject = obj.gameObject;
-        }
+       
+    }
 
+    public GameObject getEyesObject()
+    {
+        var objs = player.transform.GetChild(0).GetChild(0).GetChild(3).GetChild(0);
+        return objs.gameObject;
+    }
 
+    public void DestroyEyes()
+    {
+        Destroy(player.transform.Find("GameObject").Find("tram").Find("head").GetChild(0).gameObject);
+    }
+
+    public GameObject getPlayer()
+    {
+        return player;
     }
 
     public void moveCameraToFront() { StartCoroutine(moveCameraToFront(10)); }

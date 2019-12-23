@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,8 +11,8 @@ public class EyeInventory : MonoBehaviour
 
     public Transform content;
     Transform item;
-
-
+    GameObject eyesObject;
+    CustomizeController cc;
     UnityEngine.Object[] eyes = null;
 
     void Start()
@@ -19,15 +20,12 @@ public class EyeInventory : MonoBehaviour
         item = content.GetChild(0);
 
         // look into asset bundle later
-
-
         getInventoryFromFolder();
     }
 
     private void getInventoryFromFolder()
     {
-
-        float cellSize = 130;
+        float cellSize = 230;
         int x = 0;
         int y = 0;
         eyes = Resources.LoadAll("Eyes", typeof(GameObject));
@@ -50,16 +48,42 @@ public class EyeInventory : MonoBehaviour
                 image.sprite = spriteImage;
                 x++;
 
-              // sprite.GetComponent<Image>().sprite = spriteImage;
+                setUpButton(sprite, obj as GameObject);
             }
         }
-
-
     }
 
-    // Update is called once per frame
-    void Update()
+    private void setUpButton(RectTransform item,  GameObject eyePrefab)
     {
-        
+        var btn = item.GetComponentInChildren<Button>();
+        btn.onClick.AddListener(delegate { replaceEyes(eyePrefab);  } );
+    }
+
+    void replaceEyes(GameObject eyePrefab)
+    {
+        cc = FindObjectOfType<CustomizeController>();
+        if (eyesObject == null) eyesObject = cc.getEyesObject();
+        var trans = eyesObject.transform;
+      
+
+        var myEye = Instantiate(eyePrefab, trans);
+        // let x be zero
+        myEye.transform.position = new Vector3(0, myEye.transform.position.y, myEye.transform.position.z);
+        myEye.transform.parent = trans.parent;
+
+        DestroyImmediate(eyesObject, true);
+        eyesObject = null;
+        //save prefab
+        savePrefab();
+    }
+
+    private void savePrefab()
+    {
+        var player = cc.getPlayer();
+        var name = player.name.Replace("(Clone)", "");
+        bool success;
+        PrefabUtility.SaveAsPrefabAsset(player, "Assets/Resources/Player/"+ name+".prefab", out success);
+        if (success) Debug.Log("saved");
+        else Debug.Log("Error");
     }
 }

@@ -74,6 +74,15 @@ public class SpawnController : MonoBehaviour
         }
     }
 
+    internal void spawnEnemyTeam(int v, Vector3 pos)
+    {
+        for (int i = 0; i < v; i++)
+        {
+            var en = Instantiate(Global.Instance().enemyPrefab, pos, Quaternion.identity);
+            en.GetComponent<EnemyBase>().assignEnemeyTeamNumber(TeamNumber.Two);
+        }
+    }
+
     public void spawnEnemies(GameObject obj)
     {
             size = FindObjectOfType<GameController>().PlaygroundSize;

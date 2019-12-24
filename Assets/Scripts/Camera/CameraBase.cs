@@ -9,7 +9,7 @@ public class CameraBase : MonoBehaviour
     #region variables
 
 
-    public Transform player;
+    internal Transform player;
     protected float smoothSpeed = 4f;  //hight is faster snapping
     protected Vector3 offset;
 
@@ -93,7 +93,7 @@ public class CameraBase : MonoBehaviour
     protected void Move()
     {
         var pos = FindAveragePosition() + offset;
-        transform.LookAt(Global.Instance().currentPlayer.transform);
+        //transform.LookAt(Global.Instance().currentPlayer.transform);
         transform.position = Vector3.Lerp(transform.position, pos, smoothSpeed * Time.deltaTime);
     }
 

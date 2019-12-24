@@ -46,13 +46,18 @@ public class BattleController : MonoBehaviour
         var playerStartpoint = field1.transform.GetChild(0);
         var enemyStartpoint = field3.transform.GetChild(0);
 
-        //spawn in trill
-        var trill = Instantiate(Global.Instance().playerPrefab1, playerStartpoint.transform.position, Global.Instance().playerPrefab1.transform.rotation);
-        trill.GetComponent<PlayerBase>().assignTeamNumber(TeamNumber.One);
-        Global.Instance().setPlayer(trill);
+        ////spawn in trill
+        //var trill = Instantiate(Global.Instance().playerPrefab1, playerStartpoint.transform.position, Global.Instance().playerPrefab1.transform.rotation);
+        //trill.GetComponent<PlayerBase>().assignTeamNumber(TeamNumber.One);
+        //Global.Instance().setPlayer(trill);
 
         //spawn team
         GetComponent<SpawnController>().spawnTeam(Global.Instance().defaultPeopleOnTeam, playerStartpoint.transform.position);
+        GetComponent<SpawnController>().spawnEnemyTeam(Global.Instance().amountOfPeopleOnTeam, enemyStartpoint.transform.position);
+
+        //spawn buttons
+        FindObjectOfType<SwitchController>().setUpCanvas();
+        
 
         //spawnFlag
         var flag = Instantiate(Global.Instance().flagPrefab, playerStartpoint.position + new Vector3(0, Global.Instance().flagPrefab.GetComponent<Renderer>().bounds.size.y, -5), Quaternion.identity);

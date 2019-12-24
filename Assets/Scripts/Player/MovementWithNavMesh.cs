@@ -5,6 +5,7 @@ using UnityEngine.LowLevel;
 using UnityEngine.AI;
 using UnityEngine.UIElements;
 using System;
+using UnityEngine.EventSystems;
 
 public class MovementWithNavMesh : MonoBehaviour
 {
@@ -21,12 +22,16 @@ public class MovementWithNavMesh : MonoBehaviour
     private void Start()
     {
         player = GetComponent<NavMeshAgent>();
+        player.speed = 10;
+        player.angularSpeed = 700;
+        player.acceleration = 80;
     }
 
     void Update()
     {
         if(Input.GetMouseButtonDown(0))
         {
+            if (EventSystem.current.IsPointerOverGameObject()) return;
 
             var ray = Camera.allCameras[0].ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;

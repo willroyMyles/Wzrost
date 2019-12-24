@@ -36,12 +36,18 @@ public class Modder : MonoBehaviour
         throw new NotImplementedException();
     }
 
+
+    private static GameObject getEye()
+    {
+        return Global.Instance().currentPlayer.transform.Find("GameObject").Find("tram").Find("head").GetChild(0).gameObject;
+    }
+
     private static void applyEyeMod(Interchangable eyes)
     {
 
 
         var cc = FindObjectOfType<CustomizeController>();
-        var eyesObject = cc.getEyesObject();
+        var eyesObject = getEye();
         var trans = eyesObject.transform;
         var eyePrefab = (GameObject)Resources.Load("Eyes/" + eyes.prefabReference, typeof(GameObject));
 

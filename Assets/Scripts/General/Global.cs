@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using System.Runtime.Serialization.Formatters.Binary;
+using System;
 
 public class Global : MonoBehaviour
 {
@@ -43,6 +44,15 @@ public class Global : MonoBehaviour
     internal GameObject currentPlayer;
 
     internal Vector3 playgroundSize;
+
+    internal void switchCurrentUser(GameObject obj)
+    {
+        currentPlayer = obj;
+        var camscript = FindObjectOfType<CameraFollow>();
+        if (camscript != null)
+            camscript.assignPlayerToFollow();
+    }
+
     internal Vector3 mySectorSize;
     internal Vector3 middleSectorSize;
     internal Vector3 enemySectorSize;
@@ -115,6 +125,7 @@ public class Global : MonoBehaviour
     {
         player1 = p;
         currentPlayer = p;
+        if (!playersOnTeam.Contains(p)) playersOnTeam.Add(p);
         var camscript = FindObjectOfType<CameraFollow>();
         if (camscript != null)
             camscript.assignPlayerToFollow();

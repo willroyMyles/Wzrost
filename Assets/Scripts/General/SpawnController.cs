@@ -94,6 +94,21 @@ public class SpawnController : MonoBehaviour
         }
     }
 
+    public void spawnRandomObjects()
+    {
+        var objectssss = Resources.LoadAll("Random/", typeof(GameObject));
+        var point = Global.Instance().playgroundSize;
+     
+
+        foreach(GameObject obj in objectssss)
+        {
+            point.x = UnityEngine.Random.Range(-point.x / 2, point.x / 2);
+            point.z = UnityEngine.Random.Range(-point.z / 2, point.z / 2);
+            point.y = obj.transform.position.y;
+            Instantiate(obj, point, Quaternion.identity);
+        }
+    }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.blue;

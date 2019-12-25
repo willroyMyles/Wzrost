@@ -21,34 +21,24 @@ public class BattleController : MonoBehaviour
     {
         //spawn three fields
         var field1 = Instantiate(fieldPrefab, Vector3.zero, fieldPrefab.transform.rotation);
-        var field2 = Instantiate(fieldPrefab, Vector3.zero, fieldPrefab.transform.rotation);
-        var field3 = Instantiate(fieldPrefab, Vector3.zero, fieldPrefab.transform.rotation);
+      
 
         //move fields to proper spots
         var size = field1.GetComponent<Renderer>().bounds.size;
+        Global.Instance().playgroundSize = size;
 
-        //move field 2
-        var pos = field2.transform.position;
-        pos.x += size.x / 6 * 4;
-        pos.z -= 1.5f;
-        field2.transform.position = pos;
-        //move and rotate field 3
-        pos.x += size.x / 6 * 4;
-        pos.z -= 1.5f;
-        field3.transform.position = pos;
-        field3.transform.Rotate(Vector3.up, 180);
+        //spawn random objects
+        GetComponent<SpawnController>().spawnRandomObjects();
 
         //activate nav mesh
         field1.GetComponent<NavMeshSurface>().BuildNavMesh();
-        Global.Instance().playgroundSize = field1.GetComponent<NavMeshSurface>().GetComponent<Renderer>().bounds.size;
 
-        //setFieldSize
-        Bounds bound = new Bounds();
-        
+
+
 
         //get start point
-        var playerStartpoint = field1.transform.GetChild(0);
-        var enemyStartpoint = field3.transform.GetChild(0);
+        var playerStartpoint = new Vector3(-size.x/2 + 5, 0, 0);
+        var enemyStartpoint = new Vector3(size.x / 2 + 5, 0, 0);
 
         ////spawn in trill
         //var trill = Instantiate(Global.Instance().playerPrefab1, playerStartpoint.transform.position, Global.Instance().playerPrefab1.transform.rotation);
@@ -56,15 +46,20 @@ public class BattleController : MonoBehaviour
         //Global.Instance().setPlayer(trill);
 
         //spawn team
-        GetComponent<SpawnController>().spawnTeam(Global.Instance().defaultPeopleOnTeam, playerStartpoint.transform.position);
-        GetComponent<SpawnController>().spawnEnemyTeam(Global.Instance().amountOfPeopleOnTeam, enemyStartpoint.transform.position);
+        GetComponent<SpawnController>().spawnTeam(Global.Instance().defaultPeopleOnTeam, playerStartpoint);
+        GetComponent<SpawnController>().spawnEnemyTeam(Global.Instance().amountOfPeopleOnTeam, enemyStartpoint);
+        Global.Instance().setPlayerPosition(playerStartpoint);
 
         //spawn buttons
         FindObjectOfType<SwitchController>().setUpCanvas();
         
 
         //spawnFlag
-        var flag = Instantiate(Global.Instance().flagPrefab, playerStartpoint.position + new Vector3(0, Global.Instance().flagPrefab.GetComponent<Renderer>().bounds.size.y, -5), Quaternion.identity);
+        var myflag = Instantiate(Global.Instance().flagPrefab, playerStartpoint + new Vector3(0, Global.Instance().flagPrefab.GetComponent<Renderer>().bounds.size.y, -5), Quaternion.identity);
+        var enemyflag = Instantiate(Global.Instance().flagPrefab, enemyStartpoint + new Vector3(0, Global.Instance().flagPrefab.GetComponent<Renderer>().bounds.size.y, -5), Quaternion.identity);
+
+        Global.Instance().teamFlagPosition = myflag.transform.position;
+        Global.Instance().enemyFlagPosition = enemyflag.transform.position;
 
 
     }

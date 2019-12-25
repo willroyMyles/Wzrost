@@ -101,6 +101,7 @@ public class Global : MonoBehaviour
 
 
 
+
     private void Awake()
     {
         instance = this;
@@ -128,6 +129,12 @@ public class Global : MonoBehaviour
 
         mainCamera = Camera.allCameras[0];
 
+    }
+
+    public void setPlayerPosition(Vector3 pos)
+    {
+        pos.y = player1.transform.position.y;
+        player1.transform.position = pos;
     }
 
     public void setPlayer(GameObject p)

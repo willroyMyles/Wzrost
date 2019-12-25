@@ -42,9 +42,9 @@ public class EnemyController : MonoBehaviour
     Vector3 GetRandompointOnPlane()
     {
         var point = Global.Instance().playgroundSize;
-        point.x = UnityEngine.Random.Range(0, point.x / 2);
-        point.z = UnityEngine.Random.Range(0, point.z / 2);
-        return point/50;
+        point.x = UnityEngine.Random.Range(-point.x/2, point.x / 2);
+        point.z = UnityEngine.Random.Range(-point.z/2, point.z / 2);
+        return point;
     }
 
     // Update is called once per frame

@@ -8,13 +8,14 @@ public class BulletBase : MonoBehaviour
 
     float lifeTime = 3f;
     float currentTime = 0f;
-    float bulletSpeed = 30f;
+    float bulletSpeed = 10f;
     float speedincrease = 1.3f;
     float speedDecrease = 1.3f;
     Vector3 velocity;
 
-    float damage = 8f;
-    float damageFallOff = 4f;
+    float damage = 1f;
+    float damageFallOff;
+    internal float damageFallOffAmount = 2;
     float stunOnHit = .15f;
     float blowBack = 2f;
     string whoDoIBelongTo;
@@ -24,7 +25,10 @@ public class BulletBase : MonoBehaviour
     public float BlowBack { get => blowBack; set => blowBack = value; }
     public float StunOnHit { get => stunOnHit; set => stunOnHit = value; }
     public float Damage { get => damage; set => damage = value; }
-
+    private void Awake()
+    {
+        damageFallOff = damage / damageFallOffAmount;
+    }
     void Start()
     {
         
@@ -47,20 +51,13 @@ public class BulletBase : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "Enemy")
-        {
-            var eb = collision.gameObject.transform.parent.GetComponentInChildren<EnemyBase>();
-            eb.takeDamage(damage, stunOnHit);
-            if (whoDoIBelongTo == "Player") eb.cameraShake.Shake();
-            Destroy(gameObject);
 
-        }
 
-        if (collision.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Interactor" )
         {
             var eb = collision.gameObject.GetComponent<PlayerBase>();
             eb.takeDamage(damage);
-            if (whoDoIBelongTo == "Player") eb.cameraShake.Shake();
+          //  if (whoDoIBelongTo == "Player") eb.cameraShake.Shake();
             Destroy(gameObject);
         }
 

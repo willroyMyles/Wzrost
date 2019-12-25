@@ -32,6 +32,8 @@ public class GeneralMovement : MonoBehaviour
 
     internal void startFight(List<GameObject> listOfObjectInSphere)
     {
+        opponentsList = listOfObjectInSphere;
+        setShouldFight(true);
     }
 
     private void Update()
@@ -71,39 +73,44 @@ public class GeneralMovement : MonoBehaviour
                     agent.SetDestination(GetRandompointOnPlane());
                 }
             }
-            if (isFighting)
+         
+        }
+
+        //auto fire if is fighting
+        if (isFighting)
+        {
+            //canMove = false;
+            float lowestHealthEnemy = 1000;
+            GameObject obj = null;
+            if (opponentsList.Count <= 0)
             {
-                //canMove = false;
-                float lowestHealthEnemy = 1000;
-                GameObject obj = null;
-                if (opponentsList.Count <= 0)
+                setShouldFight(false);
+                return;
+            }
+            foreach (var en in opponentsList)
+            {
+                float health;
+                if (en == null)
                 {
-                    setShouldFight(false);
+                    opponentsList.Remove(en);
+                    agent.isStopped = false;
                     return;
                 }
-               foreach (var en in opponentsList)
+                health = en.GetComponent<PlayerBase>().Hp;
+                if (lowestHealthEnemy > health)
                 {
-                    float health;
-                    if (en == null)
-                    {
-                        opponentsList.Remove(en);
-                        agent.isStopped = false;
-                        return;
-                    }
-                    if (en.tag == "Interactor") health = en.GetComponent<PlayerBase>().Hp;
-                    else health = en.transform.parent.GetComponent<PlayerBase>().Hp;
-                    if (lowestHealthEnemy > health)
-                    {
-                        lowestHealthEnemy = health;
-                        obj = en;
-                    }
+                    lowestHealthEnemy = health;
+                    obj = en;
                 }
-                //faceEnemy
-                if (obj == null) return;
-                agent.transform.LookAt(obj.transform.position);
-                //fire bullet if i have a stright line
+            }
+            //faceEnemy
+            if (obj == null) return;
+            agent.transform.LookAt(obj.transform.position);
+            //fire bullet if i have a stright line
 
-                var efm = GetComponent<EnemyFireController>();
+
+            if (TryGetComponent<FireController>(out var efm))
+            {
                 if (efm.getCanFire())
                 {
                     if (Physics.Raycast(transform.position, transform.forward, out var hitInfo))
@@ -120,7 +127,8 @@ public class GeneralMovement : MonoBehaviour
 
     internal void PushPlayerBack(float bb)
     {
-        throw new NotImplementedException();
+        pushbackDistance = bb;
+        isPushedBack = true;
     }
 
     private void setShouldFight(bool v)

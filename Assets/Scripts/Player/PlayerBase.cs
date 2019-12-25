@@ -75,19 +75,19 @@ public class PlayerBase : MonoBehaviour
         switch (num)
         {
                 case TeamNumber.Default:
-                    bandana.GetComponent<MeshRenderer>().material.SetColor("_BaseColor", Color.black);
+                    bandana.GetComponent<Renderer>().material.SetColor("_BaseColor", Color.black);
                     break;
                 case TeamNumber.One:
-                    bandana.GetComponent<MeshRenderer>().material.SetColor("_BaseColor", Color.blue);
+                    bandana.GetComponent<Renderer>().material.SetColor("_BaseColor", Color.blue);
                     break;
                 case TeamNumber.Two:
-                    bandana.GetComponent<MeshRenderer>().material.SetColor("_BaseColor", Color.red);
+                    bandana.GetComponent<Renderer>().material.SetColor("_BaseColor", Color.red);
                     break;
                 case TeamNumber.Three:
-                    bandana.GetComponent<MeshRenderer>().material.SetColor("_BaseColor", Color.yellow);
+                    bandana.GetComponent<Renderer>().material.SetColor("_BaseColor", Color.yellow);
                     break;
                 case TeamNumber.Four:
-                    bandana.GetComponent<MeshRenderer>().material.SetColor("_BaseColor", Color.cyan);
+                    bandana.GetComponent<Renderer>().material.SetColor("_BaseColor", Color.cyan);
                     break;
         }
     }

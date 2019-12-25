@@ -6,7 +6,7 @@ public class FireController : MonoBehaviour
 {
     public GameObject bulletPrefab;
 
-    float fireRate = .5f;
+    float fireRate = .8f;
     float nextFire = 0;
     float coolDownTime = 0;
     float spawnDistance = 1f;
@@ -58,5 +58,10 @@ public class FireController : MonoBehaviour
             float bb = bullet.GetComponent<BulletBase>().BlowBack;
             pm.PushPlayerBack(bb);
         }
+    }
+
+    public bool getCanFire()
+    {
+        return coolDownTime == FireRate;
     }
 }

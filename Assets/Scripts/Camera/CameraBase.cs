@@ -102,7 +102,7 @@ public class CameraBase : MonoBehaviour
         var vec = player.localPosition;
         int amount = 0;
 
-        foreach (var obj in Global.Instance().opponentsWithinSphere)
+        foreach (var obj in Global.Instance().currentPlayer.GetComponent<DetectionSphere>().detectionList)
         {
             if (obj == null) vec += Vector3.zero;
             else vec += obj.transform.position;

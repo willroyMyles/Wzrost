@@ -26,7 +26,7 @@ public class BattleController : MonoBehaviour
 
         //move fields to proper spots
         var size = field1.GetComponent<Renderer>().bounds.size;
-        Debug.Log(size);
+
         //move field 2
         var pos = field2.transform.position;
         pos.x += size.x / 6 * 4;
@@ -40,7 +40,11 @@ public class BattleController : MonoBehaviour
 
         //activate nav mesh
         field1.GetComponent<NavMeshSurface>().BuildNavMesh();
-        Global.Instance().playgroundSize = field1.GetComponent<NavMeshSurface>().size;
+        Global.Instance().playgroundSize = field1.GetComponent<NavMeshSurface>().GetComponent<Renderer>().bounds.size;
+
+        //setFieldSize
+        Bounds bound = new Bounds();
+        
 
         //get start point
         var playerStartpoint = field1.transform.GetChild(0);

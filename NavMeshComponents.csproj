@@ -70,11 +70,11 @@
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Scripts\NavMeshComponents\Scripts\NavMeshComponents.asmdef" />
-    <Reference Include="UnityEngine.UI">
-      <HintPath>Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:\Program Files\Unity 2020.1.0a15\Editor\Data\Managed\UnityEngine\UnityEngine.AIModule.dll</HintPath>

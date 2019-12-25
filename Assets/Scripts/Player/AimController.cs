@@ -7,6 +7,12 @@ public class AimController : MonoBehaviour
 {
 
     float distance;
+    DetectionSphere ds;
+
+    private void Start()
+    {
+        ds = GetComponent<DetectionSphere>();
+    }
 
     private void LateUpdate()
     {
@@ -15,12 +21,12 @@ public class AimController : MonoBehaviour
 
     private void aim()
     {
-        if (Global.Instance().playerWithinDistanceToAim)
+        if (ds.playerEithinDistanceToAim)
         {
             //get shorest distance
             distance = 16;
             Transform opp = default;
-            foreach(var obj in Global.Instance().opponentsWithinSphere)
+            foreach(var obj in ds.detectionList)
             {
                 if (obj == gameObject) continue;
                 if (obj == null) continue;

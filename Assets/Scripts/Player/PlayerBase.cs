@@ -90,8 +90,6 @@ public class PlayerBase : MonoBehaviour
                     bandana.GetComponent<MeshRenderer>().material.SetColor("_BaseColor", Color.cyan);
                     break;
         }
-
-        Debug.Log(bandana.GetComponent<MeshRenderer>().material.color);
     }
 
     internal void PickUp(GameObject gameObject)

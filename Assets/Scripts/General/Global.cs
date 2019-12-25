@@ -48,6 +48,15 @@ public class Global : MonoBehaviour
     internal void switchCurrentUser(GameObject obj)
     {
         currentPlayer = obj;
+        //set everyone else tpo false
+        foreach (var o in playersOnTeam)
+        {
+            o.GetComponent<MovementWithNavMesh>().enabled = false;
+            o.GetComponent<EnemyController>().setPlayerControlled(true);
+        }
+        //set player to true
+        currentPlayer.GetComponent<MovementWithNavMesh>().enabled = true;
+        currentPlayer.GetComponent<EnemyController>().setPlayerControlled(false);
         var camscript = FindObjectOfType<CameraFollow>();
         if (camscript != null)
             camscript.assignPlayerToFollow();
@@ -125,7 +134,12 @@ public class Global : MonoBehaviour
     {
         player1 = p;
         currentPlayer = p;
+        currentPlayer.GetComponent<PlayerBase>().isOnTeam = true;
+        currentPlayer.GetComponent<PlayerBase>().assignTeamNumber(TeamNumber.One);
+        var scr = currentPlayer.GetComponent<MovementController>(); 
+        scr.setIsPlayerEnabled(true);
         if (!playersOnTeam.Contains(p)) playersOnTeam.Add(p);
+
         var camscript = FindObjectOfType<CameraFollow>();
         if (camscript != null)
             camscript.assignPlayerToFollow();

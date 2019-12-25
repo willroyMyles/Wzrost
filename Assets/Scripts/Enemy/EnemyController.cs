@@ -21,6 +21,14 @@ public class EnemyController : MonoBehaviour
     private NavMeshAgent agent;
     [SerializeField] List<GameObject> fightList;
     EnemyStats stats;
+
+    [SerializeField] internal bool isPlayerControlled = false;
+
+    public void setShouldFight(bool val)
+    {
+        shouldFight = val;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,56 +50,69 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (canMove)
+        if (!isPlayerControlled)
         {
-            agent.transform.position = agent.nextPosition;
-            agent.transform.LookAt(agent.nextPosition);
-            if (agent.transform.position == agent.nextPosition && agent.isStopped) agent.isStopped = false; 
-            //patrol
-            if (!agent.pathPending && agent.remainingDistance < 1f)
+            if (agent.updatePosition) agent.updatePosition = false;
+
+            if (canMove)
             {
-                agent.SetDestination(GetRandompointOnPlane());
-                stats.aggression = UnityEngine.Random.Range(0f, 1f);
-            }
-        }
-        if (shouldFight)
-        {
-            //canMove = false;
-            float lowestHealthEnemy = 1000;
-            GameObject obj = null;
-            checkFightList(); 
-            foreach(var en in fightList)
-            {
-                float health;
-                if(en == null)
+                agent.transform.position = agent.nextPosition;
+                agent.transform.LookAt(agent.nextPosition);
+                if (agent.transform.position == agent.nextPosition && agent.isStopped) agent.isStopped = false;
+                //patrol
+                if (!agent.pathPending && agent.remainingDistance < 1f)
                 {
-                    fightList.Remove(en);
-                    shouldFight = false;
-                    agent.isStopped = false;
+                    agent.SetDestination(GetRandompointOnPlane());
+                    stats.aggression = UnityEngine.Random.Range(0f, 1f);
+                }
+            }
+            if (shouldFight)
+            {
+                //canMove = false;
+                float lowestHealthEnemy = 1000;
+                GameObject obj = null;
+                checkFightList();
+                if(fightList.Count <= 0)
+                {
+                    setShouldFight(false);
                     return;
                 }
-                if(en.tag == "Player") health = en.transform.parent.GetComponent<PlayerBase>().Hp;
-                else health = en.transform.parent.GetComponent<EnemyBase>().Hp;
-                if (lowestHealthEnemy > health)
+;                foreach (var en in fightList)
                 {
-                    lowestHealthEnemy = health;
-                    obj = en;
+                    float health;
+                    if (en == null)
+                    {
+                        fightList.Remove(en);
+                        agent.isStopped = false;
+                        return;
+                    }
+                    if (en.tag == "Interactor") health = en.GetComponent<PlayerBase>().Hp;
+                    else health = en.GetComponent<PlayerBase>().Hp;
+                    if (lowestHealthEnemy > health)
+                    {
+                        lowestHealthEnemy = health;
+                        obj = en;
+                    }
                 }
-            } 
-            //faceEnemy
-            if(obj != null) agent.transform.LookAt(obj.transform.position);
-           
+                //faceEnemy
+                if (obj != null) agent.transform.LookAt(obj.transform.position);
 
-            //check aggreesion
-            if (stats.aggression < .5f)
-            {
-                shouldFight = false;
-                return;
+
+               
+                //fire bullet if i have a stright line
+                
+                var efm = GetComponent<EnemyFireController>();
+                if (efm.getCanFire())
+                {
+                    if(Physics.Raycast(transform.position, transform.forward, out var hitInfo))
+                    {
+                        if(hitInfo.collider.gameObject == obj.transform.Find("Cube").gameObject)
+                        {
+                            efm.Fire();
+                        }
+                    }
+                }
             }
-
-            //fire bullet
-            var efm = GetComponent<EnemyFireController>();
-            efm.Fire();
         }
     }
 
@@ -117,13 +138,13 @@ public class EnemyController : MonoBehaviour
         fightList = list;
         if(list.Count > 0)
         {
-            shouldFight = true;
+            setShouldFight(true);
             agent.isStopped = true;
 
         }
         else
         {
-            shouldFight = false;
+            setShouldFight(false);
             agent.isStopped = false;
         }
     }
@@ -132,5 +153,22 @@ public class EnemyController : MonoBehaviour
     {
         this.enabled = false;
     }
+    public void setPlayerControlled(bool enabled)
+    {
+
+        if (!enabled)
+        {
+           if(agent) agent.SetDestination(transform.position);
+            canMove = false;
+        }
+        else
+        {
+            if(agent) agent.SetDestination(GetRandompointOnPlane());
+            canMove = true;
+        }
+
+        this.enabled = enabled;
+    }
+
 
 }

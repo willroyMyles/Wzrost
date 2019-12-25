@@ -36,30 +36,26 @@ public class EnemyDetectionScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.transform.parent == transform.parent) return;
-        if (listOfObjectInSphere.Contains(other.gameObject)) return;
-        if(other.gameObject.tag == "Player" || other.gameObject.tag == "Enemy")
+        if (other.tag != "Interactor") return;
+        if( other.gameObject.TryGetComponent<PlayerBase>(out var comp))
         {
-            if (other.gameObject.transform.parent.GetComponentInChildren<PlayerBase>().isOnTeam == transform.parent.GetComponentInChildren<EnemyBase>().isOnTeam) return;
-
+            if(comp.teamNumber != transform.parent.GetComponent<PlayerBase>().teamNumber)
+            {
                 addObjectsToSphere(other.gameObject);
                 transform.parent.GetComponent<EnemyController>().startFight(listOfObjectInSphere);
-            
+            }
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject == null) Debug.Log("something dies");
-        if (other.gameObject.transform.parent == transform.parent) return;
-        if (other.gameObject.tag == "Player" || other.gameObject.tag == "Enemy")
+        if (other.tag != "Interactor") return;
+        if (other.gameObject.TryGetComponent<PlayerBase>(out var comp))
         {
-            if (other.gameObject.transform.parent.GetComponentInChildren<PlayerBase>().isOnTeam == transform.parent.GetComponentInChildren<EnemyBase>().isOnTeam) return;
-            if (listOfObjectInSphere.Contains(other.gameObject))
+            if (comp.teamNumber != transform.parent.GetComponent<PlayerBase>().teamNumber && listOfObjectInSphere.Contains(other.gameObject))
             {
                 removeObjectsFromSphere(other.gameObject);
                 transform.parent.GetComponent<EnemyController>().startFight(listOfObjectInSphere);
-
             }
         }
     }

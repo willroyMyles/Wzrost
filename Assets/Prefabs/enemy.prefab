@@ -132,6 +132,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3f2799773864444dae484e49e8f68fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canMove: 1
+  shouldFight: 0
+  fightList: []
+  isPlayerControlled: 0
 --- !u!195 &7513654178635488490
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -166,6 +170,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 559b0de60c3da5f4c9a448faa8c6617f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mod:
+    eyes:
+      isEquipped: 0
+      prefabReference: 
+      type: 0
+    rightArm:
+      isEquipped: 0
+      prefabReference: 
+      type: 0
+    leftArm:
+      isEquipped: 0
+      prefabReference: 
+      type: 0
+    wheels:
+      isEquipped: 0
+      prefabReference: 
+      type: 0
+    shaft:
+      isEquipped: 0
+      prefabReference: 
+      type: 0
   headSpace: {fileID: 0}
   rightArmSpace: {fileID: 0}
   leftArmSpace: {fileID: 0}
@@ -359,6 +384,8 @@ GameObject:
   - component: {fileID: 2469159334615825647}
   - component: {fileID: 8186517317829963360}
   - component: {fileID: 3478675944100213607}
+  - component: {fileID: 5943970375940234564}
+  - component: {fileID: 4626663826360016529}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Enemy
@@ -469,6 +496,31 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1.0000001}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5943970375940234564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3357034497697859445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35d473e0371fa9446ae65c9b75ed85d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!135 &4626663826360016529
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3357034497697859445}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.50000006
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3625836117253833089
 GameObject:

@@ -8,6 +8,8 @@ public class DetectionSphere : MonoBehaviour
     
     bool drawGizmos = true;
     CameraBase cf;
+    [SerializeField] internal List<GameObject> detectionList = new List<GameObject>();
+    internal bool playerEithinDistanceToAim = false;
 
     public bool DrawGizmos { get => drawGizmos; set => drawGizmos = value; }
 
@@ -24,10 +26,10 @@ public class DetectionSphere : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-      
-            //position camera to view both players
-           if(other.gameObject.tag == "Enemy" && !other.gameObject.transform.parent.GetComponent<EnemyBase>().isOnTeam) Global.Instance().opponentsWithinSphere.Add(other.gameObject);
-           if (Global.Instance().opponentsWithinSphere.Count > 1) Global.Instance().playerWithinDistanceToAim = true;
+
+        //position camera to view both players
+        if (other.gameObject.tag == "Enemy" && !other.gameObject.transform.parent.GetComponent<PlayerBase>().isOnTeam) detectionList.Add(other.gameObject);
+        if (detectionList.Count > 1) playerEithinDistanceToAim = true;
 
     }
 
@@ -35,8 +37,8 @@ public class DetectionSphere : MonoBehaviour
     {
 
             //position camera to view both players
-            if (other.gameObject.tag == "Enemy" && !other.gameObject.transform.parent.GetComponent<EnemyBase>().isOnTeam) Global.Instance().opponentsWithinSphere.Remove(other.gameObject);
-            if (Global.Instance().opponentsWithinSphere.Count <= 1) Global.Instance().playerWithinDistanceToAim = false;
+            if (other.gameObject.tag == "Enemy" && !other.gameObject.transform.parent.GetComponent<PlayerBase>().isOnTeam) detectionList.Remove(other.gameObject);
+        if (detectionList.Count > 1) playerEithinDistanceToAim = false;
 
     }
 

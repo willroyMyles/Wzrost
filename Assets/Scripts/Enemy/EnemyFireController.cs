@@ -58,6 +58,11 @@ public class EnemyFireController : MonoBehaviour
         }
     }
 
+    public bool getCanFire()
+    {
+        return coolDownTime == FireRate;
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.DrawSphere(gameObject.transform.position + gameObject.transform.forward * spawnDistance, 1);

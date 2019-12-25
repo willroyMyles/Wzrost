@@ -21,15 +21,19 @@ public class DetectionSphere : MonoBehaviour
         Global.Instance().opponentsWithinSphere.Add(gameObject);
 
         var collider = GetComponent<SphereCollider>();
-        collider.radius = Global.Instance().playerDectecionSphereLookRadius;
+        collider.radius = Global.Instance().playerDectecionSphereLookRadius;  // should get from playerBase;
     }
 
     private void OnTriggerEnter(Collider other)
     {
 
         //position camera to view both players
-        if (other.gameObject.tag == "Enemy" && !other.gameObject.transform.parent.GetComponent<PlayerBase>().isOnTeam) detectionList.Add(other.gameObject);
-        if (detectionList.Count > 1) playerEithinDistanceToAim = true;
+        if (other.gameObject.tag == "Enemy" && !other.gameObject.transform.parent.GetComponent<PlayerBase>().isOnTeam)
+        {
+            detectionList.Add(other.gameObject);
+            if (detectionList.Count > 1) playerEithinDistanceToAim = true;
+            GetComponent<GeneralMovement>().startFight(detectionList);
+        }
 
     }
 
@@ -37,8 +41,11 @@ public class DetectionSphere : MonoBehaviour
     {
 
             //position camera to view both players
-            if (other.gameObject.tag == "Enemy" && !other.gameObject.transform.parent.GetComponent<PlayerBase>().isOnTeam) detectionList.Remove(other.gameObject);
-        if (detectionList.Count > 1) playerEithinDistanceToAim = false;
+        if (other.gameObject.tag == "Enemy" && !other.gameObject.transform.parent.GetComponent<PlayerBase>().isOnTeam && detectionList.Contains(other.gameObject))
+        {
+            detectionList.Remove(other.gameObject);
+            if (detectionList.Count < 1) playerEithinDistanceToAim = false;
+        }
 
     }
 

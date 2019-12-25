@@ -19,7 +19,7 @@ public class EnemyDetectionScript : MonoBehaviour
             if (child == null)
             {
                 listOfObjectInSphere.Remove(child);
-                transform.parent.GetComponent<EnemyController>().startFight(listOfObjectInSphere);
+                transform.parent.GetComponent<GeneralMovement>().startFight(listOfObjectInSphere);
             }
         }
     }
@@ -36,26 +36,27 @@ public class EnemyDetectionScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag != "Interactor") return;
+        if (other.tag != "Interactor" || other.tag == "Enemy") return;
         if( other.gameObject.TryGetComponent<PlayerBase>(out var comp))
         {
             if(comp.teamNumber != transform.parent.GetComponent<PlayerBase>().teamNumber)
             {
+                if (listOfObjectInSphere.Contains(other.gameObject)) return;
                 addObjectsToSphere(other.gameObject);
-                transform.parent.GetComponent<EnemyController>().startFight(listOfObjectInSphere);
+                transform.parent.GetComponent<GeneralMovement>().startFight(listOfObjectInSphere);
             }
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag != "Interactor") return;
+        if (other.tag != "Interactor" || other.tag == "Enemy") return;
         if (other.gameObject.TryGetComponent<PlayerBase>(out var comp))
         {
             if (comp.teamNumber != transform.parent.GetComponent<PlayerBase>().teamNumber && listOfObjectInSphere.Contains(other.gameObject))
             {
                 removeObjectsFromSphere(other.gameObject);
-                transform.parent.GetComponent<EnemyController>().startFight(listOfObjectInSphere);
+                transform.parent.GetComponent<GeneralMovement>().startFight(listOfObjectInSphere);
             }
         }
     }

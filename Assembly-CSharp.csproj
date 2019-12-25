@@ -91,6 +91,7 @@
     <Compile Include="Assets\Scripts\Player\AimController.cs" />
     <Compile Include="Assets\Scripts\Player\DetectionSphere.cs" />
     <Compile Include="Assets\Scripts\Player\FireController.cs" />
+    <Compile Include="Assets\Scripts\Player\GeneralMovement.cs" />
     <Compile Include="Assets\Scripts\Player\Interchangable.cs" />
     <Compile Include="Assets\Scripts\Player\Modifications.cs" />
     <Compile Include="Assets\Scripts\Player\MovementController.cs" />

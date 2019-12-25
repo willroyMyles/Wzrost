@@ -40,7 +40,7 @@ public class EnemyBase : PlayerBase
 
     public void StunEnemy(float stunTime)
     {
-        StartCoroutine(GetComponent<EnemyController>().stunPlayer(stunTime));
+        //StartCoroutine(GetComponent<EnemyController>().stunPlayer(stunTime));
     }
 
     public void takeDamage(float damage, float stunOnHit)

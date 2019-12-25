@@ -58,7 +58,7 @@ public class SpawnController : MonoBehaviour
         {
             var en = Instantiate(Global.Instance().playerPrefab1, pos, Quaternion.identity);
             en.GetComponent<PlayerBase>().assignTeamNumber(Global.Instance().myTeamNumber);
-            en.GetComponent<MovementController>().setIsPlayerEnabled(false);
+            en.GetComponent<GeneralMovement>().setPlayerControlled(false);
             Global.Instance().playersOnTeam.Add(en);
         }
     }

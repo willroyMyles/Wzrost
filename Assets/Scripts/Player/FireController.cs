@@ -54,7 +54,7 @@ public class FireController : MonoBehaviour
             bullet.GetComponent<BulletBase>().setUpBall(transform.forward, gameObject.tag);
 
             //push player back
-            var pm = GetComponent<MovementWithNavMesh>();
+            var pm = GetComponent<GeneralMovement>();
             float bb = bullet.GetComponent<BulletBase>().BlowBack;
             pm.PushPlayerBack(bb);
         }

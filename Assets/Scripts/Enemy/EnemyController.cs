@@ -87,7 +87,7 @@ public class EnemyController : MonoBehaviour
                         return;
                     }
                     if (en.tag == "Interactor") health = en.GetComponent<PlayerBase>().Hp;
-                    else health = en.GetComponent<PlayerBase>().Hp;
+                    else health = en.transform.parent.GetComponent<PlayerBase>().Hp;
                     if (lowestHealthEnemy > health)
                     {
                         lowestHealthEnemy = health;

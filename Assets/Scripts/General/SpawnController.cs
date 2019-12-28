@@ -13,13 +13,9 @@ public class SpawnController : MonoBehaviour
         center = Vector3.zero;
 
     }
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 
-    public void spawnEnemies(GameObject obj, int amount)
+    public void SpawnEnemies(GameObject obj, int amount)
     {
         size = FindObjectOfType<GameController>().PlaygroundSize;
 
@@ -34,10 +30,10 @@ public class SpawnController : MonoBehaviour
 
     internal void spawnPlayer()
     {
-        Global.Instance().setPlayer(Instantiate(Global.Instance().playerPrefab1));
+        Global.Instance().SetPlayer(Instantiate(Global.Instance().playerPrefab1));
     }
 
-    internal void spawnTeam(int v)
+    internal void SpawnTeam(int v)
     {
         size = FindObjectOfType<GameController>().PlaygroundSize;
 
@@ -52,7 +48,7 @@ public class SpawnController : MonoBehaviour
         }
     }
 
-    internal void spawnTeam(int v, Vector3 pos)
+    internal void SpawnTeam(int v, Vector3 pos)
     {
         for (int i = 0; i < v; i++)
         {
@@ -63,7 +59,7 @@ public class SpawnController : MonoBehaviour
         }
     }
 
-    internal void spawnEnemyTeam(int v)
+    internal void SpawnEnemyTeam(int v)
     {
         int divisionFactor = 10; // 2 by default for eeach half
 
@@ -75,7 +71,7 @@ public class SpawnController : MonoBehaviour
         }
     }
 
-    internal void spawnEnemyTeam(int v, Vector3 pos)
+    internal void SpawnEnemyTeam(int v, Vector3 pos)
     {
         for (int i = 0; i < v; i++)
         {
@@ -84,7 +80,7 @@ public class SpawnController : MonoBehaviour
         }
     }
 
-    public void spawnEnemies(GameObject obj)
+    public void SpawnEnemies(GameObject obj)
     {
             size = FindObjectOfType<GameController>().PlaygroundSize;
 
@@ -94,7 +90,7 @@ public class SpawnController : MonoBehaviour
         }
     }
 
-    public void spawnRandomObjects()
+    public void SpawnRandomObjects()
     {
         var objectssss = Resources.LoadAll("Random/", typeof(GameObject));
         var point = Global.Instance().playgroundSize;

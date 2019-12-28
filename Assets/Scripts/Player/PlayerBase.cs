@@ -26,9 +26,16 @@ public class PlayerBase : MonoBehaviour
 
     public GameObject headSpace, rightArmSpace, leftArmSpace;
     internal bool attackEquipped = false;
+
+    internal TeamNumber GetTeamNumber()
+    {
+        return teamNumber;
+    }
+
     internal bool defenseEquipped = false;
     internal bool flagEquipped = false;
     internal bool isOnTeam = false; // have spawn controller deal with this for now
+    internal bool shouldUpdateHealthSlider = false;
 
     internal TeamNumber teamNumber;
 
@@ -39,7 +46,6 @@ public class PlayerBase : MonoBehaviour
         Hp = 10f;
         Speed = Attack = AttackRate = Defense = RecoveryRate = 1f;
         cameraShake = FindObjectOfType<CameraShake>();
-
     }
 
     public void assignTeamNumber(TeamNumber num)
@@ -64,7 +70,7 @@ public class PlayerBase : MonoBehaviour
         GameObject bandana = null;
         foreach (var child in bandanas)
         {
-            if (child.tag == "Bandana")
+            if (child.CompareTag("Bandana"))
             {
                 bandana = child.gameObject;
                 break;
@@ -135,12 +141,27 @@ public class PlayerBase : MonoBehaviour
     public void takeDamage(float damage)
     {
         Hp -= damage;
+        shouldUpdateHealthSlider = true;
         //cameraShake.Shake();
+    }
+
+    /// <summary>
+    /// If is true, it set the value to false and return true, otherwise returns false
+    /// .This toggles the value only if it is true
+    /// </summary>
+    /// <returns>bool shouldUpdateHealthSlider</returns>
+    public bool ShouldUpdateHealthCanvas()
+    {
+        if (shouldUpdateHealthSlider)
+        {
+            shouldUpdateHealthSlider = !shouldUpdateHealthSlider;
+            return !shouldUpdateHealthSlider;
+        }
+        else return false;
     }
 
     public void die()
     {
-        Debug.Log("im dead damit!");
         if (Global.Instance().opponentsWithinSphere.Contains(gameObject)) Global.Instance().opponentsWithinSphere.Remove(gameObject);
         Destroy(gameObject);
         this.enabled = false;

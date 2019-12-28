@@ -100,11 +100,6 @@
     <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\Player\SliderController.cs" />
     <Compile Include="Assets\Scripts\Player\SwitchController.cs" />
-    <Compile Include="Assets\ThirdParty\Joystick Pack\Scripts\Base\Joystick.cs" />
-    <Compile Include="Assets\ThirdParty\Joystick Pack\Scripts\Joysticks\DynamicJoystick.cs" />
-    <Compile Include="Assets\ThirdParty\Joystick Pack\Scripts\Joysticks\FixedJoystick.cs" />
-    <Compile Include="Assets\ThirdParty\Joystick Pack\Scripts\Joysticks\FloatingJoystick.cs" />
-    <Compile Include="Assets\ThirdParty\Joystick Pack\Scripts\Joysticks\VariableJoystick.cs" />
     <Compile Include="Assets\ThirdParty\RainMaker\Demo\DemoScript.cs" />
     <Compile Include="Assets\ThirdParty\RainMaker\Demo\DemoScript2D.cs" />
     <Compile Include="Assets\ThirdParty\RainMaker\Demo\DemoScriptStartRainOnSpaceBar.cs" />
@@ -760,10 +755,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{1D9F5026-A12E-E2A8-7FB9-3BBFDD9D6FF4}</Project>
-      <Name>Assembly-CSharp-firstpass</Name>
-    </ProjectReference>
     <ProjectReference Include="NavMeshComponentsEditor.csproj">
       <Project>{CB78D516-05E4-6822-F459-4F51F5D11F97}</Project>
       <Name>NavMeshComponentsEditor</Name>

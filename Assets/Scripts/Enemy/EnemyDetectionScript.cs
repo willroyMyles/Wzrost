@@ -19,7 +19,7 @@ public class EnemyDetectionScript : MonoBehaviour
             if (child == null)
             {
                 listOfObjectInSphere.Remove(child);
-                transform.parent.GetComponent<GeneralMovement>().startFight(listOfObjectInSphere);
+                transform.parent.GetComponent<GeneralMovement>().StartFight(listOfObjectInSphere);
             }
         }
     }
@@ -43,7 +43,7 @@ public class EnemyDetectionScript : MonoBehaviour
             {
                 if (listOfObjectInSphere.Contains(other.gameObject)) return;
                 addObjectsToSphere(other.gameObject);
-                transform.parent.GetComponent<GeneralMovement>().startFight(listOfObjectInSphere);
+                transform.parent.GetComponent<GeneralMovement>().StartFight(listOfObjectInSphere);
             }
         }
     }
@@ -56,7 +56,7 @@ public class EnemyDetectionScript : MonoBehaviour
             if (comp.teamNumber != transform.parent.GetComponent<PlayerBase>().teamNumber && listOfObjectInSphere.Contains(other.gameObject))
             {
                 removeObjectsFromSphere(other.gameObject);
-                transform.parent.GetComponent<GeneralMovement>().startFight(listOfObjectInSphere);
+                transform.parent.GetComponent<GeneralMovement>().StartFight(listOfObjectInSphere);
             }
         }
     }

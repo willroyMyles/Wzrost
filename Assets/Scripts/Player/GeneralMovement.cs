@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
 
@@ -16,30 +17,43 @@ public class GeneralMovement : MonoBehaviour
     internal List<GameObject> opponentsList;
     internal NavMeshAgent agent;
 
+    internal Image healthImageBg;
+    internal Image healthImage;
+    internal GameObject panel;
+
     private void Awake()
     {
-        setUp();
+        SetUp();
     }
 
-    private void setUp()
+    private void SetUp()
     {
         agent = GetComponent<NavMeshAgent>();
         agent.updatePosition = false;
         agent.speed = 10;
         agent.angularSpeed = 700;
         agent.acceleration = 80;
+
+        //set up canvas
+        SetupCanvas();
     }
 
-    internal void startFight(List<GameObject> listOfObjectInSphere)
+    private void SetupCanvas()
+    {
+        healthImageBg = Instantiate(Global.Instance().playerCanvas,Global.Instance().worldSpaceCanvas.transform).GetComponentInChildren<Image>();
+        healthImage = healthImageBg.transform.GetChild(0).GetComponent<Image>();
+    }
+
+    internal void StartFight(List<GameObject> listOfObjectInSphere)
     {
         opponentsList = listOfObjectInSphere;
-        setShouldFight(true);
+        SetShouldFight(true);
     }
 
     private void Update()
     {
 
-        if (isPlayerControlled)
+        if (false)
         {
             if (Input.GetMouseButtonDown(0))
             {
@@ -47,7 +61,7 @@ public class GeneralMovement : MonoBehaviour
 
                 var ray = Global.Instance().mainCamera.ScreenPointToRay(Input.mousePosition);
                 var mask = LayerMask.GetMask("platform");
-                if (Physics.Raycast(ray, out var hit, 1000, mask))
+                if (Physics.Raycast(ray, out var hit, 100, mask))
                 {
                     agent.SetDestination(hit.point);
                 }
@@ -65,12 +79,12 @@ public class GeneralMovement : MonoBehaviour
             if (ableToMove)
             {
                 agent.transform.position = agent.nextPosition;
-                agent.transform.LookAt(agent.nextPosition);
-                if (agent.transform.position == agent.nextPosition && agent.isStopped) agent.isStopped = false;
+                //if (agent.transform.position == agent.nextPosition && agent.isStopped) agent.isStopped = false;
                 //patrol
                 if (!agent.pathPending && agent.remainingDistance < 1f)
                 {
                     agent.SetDestination(GetRandompointOnPlane());
+                    agent.transform.LookAt(agent.destination);
                 }
             }
          
@@ -84,7 +98,7 @@ public class GeneralMovement : MonoBehaviour
             GameObject obj = null;
             if (opponentsList.Count <= 0)
             {
-                setShouldFight(false);
+                SetShouldFight(false);
                 return;
             }
             foreach (var en in opponentsList)
@@ -113,7 +127,7 @@ public class GeneralMovement : MonoBehaviour
             {
                 if (efm.getCanFire())
                 {
-                    if (Physics.Raycast(transform.position, transform.forward, out var hitInfo))
+                    if (Physics.Raycast(transform.position, transform.forward, out var hitInfo, 10f ))
                     {
                         if (hitInfo.collider.gameObject == obj.transform.Find("Cube").gameObject)
                         {
@@ -123,6 +137,20 @@ public class GeneralMovement : MonoBehaviour
                 }
             }
         }
+
+    }
+
+    private void LateUpdate()
+    {
+        UpdateImagePosition();
+
+    }
+
+    private void UpdateImagePosition()
+    {
+        //healthImageBg.transform.position = Global.Instance().mainCamera.WorldToScreenPoint(transform.position);
+        healthImageBg.transform.position =transform.position;
+        //healthImageBg.rectTransform.eulerAngles = transform.up;
     }
 
     internal void PushPlayerBack(float bb)
@@ -131,7 +159,7 @@ public class GeneralMovement : MonoBehaviour
         isPushedBack = true;
     }
 
-    private void setShouldFight(bool v)
+    private void SetShouldFight(bool v)
     {
         isFighting = v;
     }
@@ -146,7 +174,7 @@ public class GeneralMovement : MonoBehaviour
 
     public void setPlayerControlled(bool playerControl)
     {
-        if (!agent) setUp();
+        if (!agent) SetUp();
         isPlayerControlled = playerControl;
         agent.updatePosition = playerControl;
     }

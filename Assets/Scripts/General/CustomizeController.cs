@@ -28,7 +28,7 @@ public class CustomizeController : MonoBehaviour
         if (Global.Instance().player1 == null)
         {
             player = Instantiate(Global.Instance().playerPrefab1, Global.Instance().playerPrefab1.transform.position, Global.Instance().playerPrefab1.transform.rotation);
-            Global.Instance().setPlayer(player);
+            Global.Instance().SetPlayer(player);
         }
         else player = Global.Instance().currentPlayer;
         cam = Global.Instance().mainCamera;
@@ -131,7 +131,6 @@ public class CustomizeController : MonoBehaviour
             {
                 if (y - (360 + angle) > -1 && y - (360 + angle) < 1)
                 {
-                    Debug.Log("finished");
                     cam.transform.position = pos;
                     cam.transform.eulerAngles = new Vector3(0, angle, 0);
                     
@@ -142,7 +141,6 @@ public class CustomizeController : MonoBehaviour
             {
                 if (y - (0 + angle) > -2 && y - (0 + angle) < 2)
                 {
-                    Debug.Log("finished");
                     cam.transform.position = pos;
                     cam.transform.eulerAngles = new Vector3(0, angle, 0);
                     break;

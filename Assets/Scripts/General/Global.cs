@@ -16,7 +16,7 @@ public class Global : MonoBehaviour
         if (instance == null)
         {
             instance = FindObjectOfType<Global>();
-            instance.findObjects();
+            instance.FindObjects();
         }
         return instance;
     }
@@ -33,6 +33,8 @@ public class Global : MonoBehaviour
     public GameObject playerPrefab2;
     public GameObject playerPrefab3;
     public GameObject playerPrefab4;
+    public GameObject playerCanvas;
+    public GameObject worldSpaceCanvas;
 
 
     internal GameObject flag;
@@ -45,7 +47,7 @@ public class Global : MonoBehaviour
 
     internal Vector3 playgroundSize;
 
-    internal void switchCurrentUser(GameObject obj)
+    internal void SwitchCurrentUser(GameObject obj)
     {
         currentPlayer = obj;
         //set everyone else tpo false
@@ -57,7 +59,7 @@ public class Global : MonoBehaviour
         currentPlayer.GetComponent<GeneralMovement>().setPlayerControlled(true);
         var camscript = FindObjectOfType<CameraFollow>();
         if (camscript != null)
-            camscript.assignPlayerToFollow();
+            camscript.AssignPlayerToFollow();
     }
 
     internal Vector3 mySectorSize;
@@ -104,19 +106,18 @@ public class Global : MonoBehaviour
     {
         instance = this;
         if (instance == null) instance = FindObjectOfType<Global>();
-        instance.findObjects();
+        //instance.findObjects();
     }
 
     #endregion
 
-    private void Start()
+    public void FindObjects()
     {
-    }
-
-    public void findObjects()
-    {
+      
         //create player
-        setPlayer(Instantiate(playerPrefab1, playerPrefab1.transform.position, playerPrefab1.transform.rotation));
+        mainCamera = Camera.allCameras[0];
+       // SetPlayer(Instantiate(playerPrefab1, playerPrefab1.transform.position, playerPrefab1.transform.rotation));
+        return;
         //retieve mods
         if(SaveExists(player1.name.Replace("(Clone)", "")))
         {
@@ -125,7 +126,6 @@ public class Global : MonoBehaviour
             Modder.ApplyMods(mods);
         }
 
-        mainCamera = Camera.allCameras[0];
 
     }
 
@@ -135,7 +135,7 @@ public class Global : MonoBehaviour
         player1.transform.position = pos;
     }
 
-    public void setPlayer(GameObject p)
+    public void SetPlayer(GameObject p)
     {
         player1 = p;
         currentPlayer = p;
@@ -145,9 +145,9 @@ public class Global : MonoBehaviour
         scr.setPlayerControlled(true);
         if (!playersOnTeam.Contains(p)) playersOnTeam.Add(p);
 
-        var camscript = FindObjectOfType<CameraFollow>();
+        var camscript = mainCamera.GetComponent<CameraFollow>();
         if (camscript != null)
-            camscript.assignPlayerToFollow();
+            camscript.AssignPlayerToFollow();
 
     }
 
@@ -160,7 +160,6 @@ public class Global : MonoBehaviour
         using (FileStream fs = new FileStream(path + key + ".txt", FileMode.Create))
         {
             formatter.Serialize(fs, obj);
-            Debug.Log("Saved");
         }
 
     }
@@ -169,12 +168,10 @@ public class Global : MonoBehaviour
     {
         string path = Application.persistentDataPath + "/saves/";
         BinaryFormatter formatter = new BinaryFormatter();
-        T returnValue = default(T);
+        T returnValue = default;
         using (FileStream fs = new FileStream(path + key + ".txt", FileMode.Open))
         {
             returnValue = (T)formatter.Deserialize(fs);
-            Debug.Log("Loaded");
-
         }
 
         return returnValue;
@@ -184,12 +181,11 @@ public class Global : MonoBehaviour
     {
         string path = Application.persistentDataPath + "/saves/" + key + ".txt";
         return File.Exists(path);
-
     }
 
     #region statistics
 
-    float distance;
+    //float distance;
     
 
     #endregion

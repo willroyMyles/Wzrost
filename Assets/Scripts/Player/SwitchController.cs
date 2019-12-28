@@ -44,7 +44,7 @@ public class SwitchController : MonoBehaviour
 
     private void setUpButton(Button actualButton, GameObject obj)
     {
-        actualButton.onClick.AddListener(delegate { Global.Instance().switchCurrentUser(obj);  });
+        actualButton.onClick.AddListener(delegate { Global.Instance().SwitchCurrentUser(obj);  });
     }
 
     // Update is called once per frame

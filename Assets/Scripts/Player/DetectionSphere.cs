@@ -7,38 +7,38 @@ public class DetectionSphere : MonoBehaviour
 
 
     bool drawGizmos = true;
-    CameraBase cf;
     [SerializeField] internal List<GameObject> detectionList = new List<GameObject>();
     internal bool playerEithinDistanceToAim = false;
+    PlayerBase playerBase;
+    GeneralMovement generalMovement;
 
     public bool DrawGizmos { get => drawGizmos; set => drawGizmos = value; }
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
 
-        var collider = GetComponent<SphereCollider>();
-        collider.radius = Global.Instance().playerDectecionSphereLookRadius;  // should get from playerBase;
+        GetComponent<SphereCollider>().radius = Global.Instance().playerDectecionSphereLookRadius;
+        playerBase = GetComponent<PlayerBase>();
+        generalMovement = GetComponent<GeneralMovement>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
         //check if object is player or enemy
-        if (other.tag == "Player" || other.tag == "Enemy")
+        if (other.CompareTag("Player") || other.CompareTag("Enemy"))
         {
 
 
-        //check if they on our team
-            var theirNum = other.transform.parent.GetComponent<PlayerBase>().teamNumber;
-            var myNum = GetComponent<PlayerBase>().teamNumber;
-        if (theirNum == myNum) return;
+            //check if they on our team
+        if (other.transform.parent.GetComponent<PlayerBase>().teamNumber == playerBase.GetTeamNumber()) return;
         // check if its alread in list
         if (detectionList.Contains(other.transform.parent.gameObject)) return;
 
         //add to list
             detectionList.Add(other.transform.parent.gameObject);
             if (detectionList.Count > 1) playerEithinDistanceToAim = true;
-            GetComponent<GeneralMovement>().startFight(detectionList);
+            generalMovement.StartFight(detectionList);
         }
     }
 
@@ -46,10 +46,10 @@ public class DetectionSphere : MonoBehaviour
     {
 
         //check if object is player or enemy
-        if (other.tag == "Player" || other.tag == "Enemy")
+        if (other.CompareTag("Player") || other.CompareTag("Enemy"))
         {
         //check if they on our team
-        if (other.transform.parent.GetComponent<PlayerBase>().teamNumber == GetComponent<PlayerBase>().teamNumber) return;
+        if (other.transform.parent.GetComponent<PlayerBase>().teamNumber == playerBase.GetTeamNumber()) return;
         //check if its already in list
         if (!detectionList.Contains(other.transform.parent.gameObject)) return;
         

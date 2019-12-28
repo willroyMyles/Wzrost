@@ -28,7 +28,7 @@ public class CameraBase : MonoBehaviour
     #endregion
     #region internal functions
 
-    public void assignPlayerToFollow()
+    public void AssignPlayerToFollow()
     {
         
         cam = Global.Instance().mainCamera;
@@ -37,20 +37,10 @@ public class CameraBase : MonoBehaviour
         player = Global.Instance().currentPlayer.transform;
         offset = transform.position - Global.Instance().currentPlayer.transform.position;
     }
-    protected void Start()
-    {
-       // assignPlayerToFollow();
-    }
-
-
-    private void LateUpdate()
-    {
-
-    }
 
     protected void Zoom()
     {
-        float requieredSize = getGreatestDistance();
+        float requieredSize = GetGreatestDistance();
         cam.orthographicSize = Mathf.SmoothDamp(cam.orthographicSize, requieredSize, ref zoomSpeed, dampTime);
     }
 
@@ -76,7 +66,7 @@ public class CameraBase : MonoBehaviour
         return size;
     }
 
-    private float getGreatestDistance()
+    private float GetGreatestDistance()
     {
         if (Global.Instance().opponentsWithinSphere.Count <= 1) return Mathf.Lerp(Global.Instance().orthoMinZoom, Global.Instance().orthoMaxZoom, Global.Instance().playerPreferredZoomLevel);
 
@@ -92,6 +82,7 @@ public class CameraBase : MonoBehaviour
 
     protected void Move()
     {
+        if (!player) return;
         var pos = FindAveragePosition() + offset;
         //transform.LookAt(Global.Instance().currentPlayer.transform);
         transform.position = Vector3.Lerp(transform.position, pos, smoothSpeed * Time.deltaTime);

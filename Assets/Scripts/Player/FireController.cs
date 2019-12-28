@@ -11,6 +11,7 @@ public class FireController : MonoBehaviour
     float coolDownTime = 0;
     float spawnDistance = 1f;
     bool fire = false;
+    GeneralMovement generalMovement;
 
     Vector3 finalPosition;
 
@@ -20,7 +21,7 @@ public class FireController : MonoBehaviour
 
     void Start()
     {
-        
+        generalMovement = GetComponent<GeneralMovement>();
     }
 
     // Update is called once per frame
@@ -54,9 +55,8 @@ public class FireController : MonoBehaviour
             bullet.GetComponent<BulletBase>().setUpBall(transform.forward, gameObject.tag);
 
             //push player back
-            var pm = GetComponent<GeneralMovement>();
-            float bb = bullet.GetComponent<BulletBase>().BlowBack;
-            pm.PushPlayerBack(bb);
+
+            generalMovement.PushPlayerBack(bullet.GetComponent<BulletBase>().BlowBack);
         }
     }
 

@@ -33,12 +33,12 @@ public class GameController : MonoBehaviour
         if (enemyPrefab != null)
         {
             //GetComponent<SpawnController>().spawnEnemies(enemyPrefab, amountOfEnemies);
-            GetComponent<SpawnController>().spawnTeam(3);
-            GetComponent<SpawnController>().spawnEnemyTeam(4);
+            GetComponent<SpawnController>().SpawnTeam(3);
+            GetComponent<SpawnController>().SpawnEnemyTeam(4);
         }
         Global.Instance().currentPlayer.GetComponent<PlayerBase>().assignTeamNumber(Global.Instance().myTeamNumber);
         Global.Instance().playersOnTeam.Add(Global.Instance().currentPlayer);
-        FindObjectOfType<CameraBase>().assignPlayerToFollow();
+        FindObjectOfType<CameraBase>().AssignPlayerToFollow();
     }
 
     // Update is called once per frame

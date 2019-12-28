@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 5073774918892647259}
   - component: {fileID: 3275401651123562655}
   - component: {fileID: 3275401651123562650}
-  - component: {fileID: 3275401651123562648}
   m_Layer: 0
   m_Name: flag
   m_TagString: Untagged
@@ -114,19 +113,3 @@ CapsuleCollider:
   m_Height: 0.56045556
   m_Direction: 1
   m_Center: {x: -0.0008934733, y: 0.049772225, z: -0.07649499}
---- !u!114 &3275401651123562648
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6797477083912324999}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8c9876b3628df24f85575d0702bc425, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 1
-  canvasPrefab: {fileID: 2060480685896581973, guid: 8b9cd0aa43e058a45b9996a87aca53e1,
-    type: 3}
-  name: Flag!

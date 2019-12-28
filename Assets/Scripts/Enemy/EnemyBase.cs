@@ -27,15 +27,15 @@ public class EnemyBase : PlayerBase
         base.Start();
 
         var go = transform.parent;
-        canvas = GetComponentInChildren<Canvas>();
-        if (canvas.worldCamera == null)
-        {
-            canvas.worldCamera = Camera.allCameras[0];
-        }
-        image = GetComponentInChildren<Image>();
-        group = canvas.GetComponent<CanvasGroup>();
-        text = GetComponentInChildren<TMPro.TextMeshProUGUI>();
-        text.text = baseStats.hp.ToString();
+        //canvas = GetComponentInChildren<Canvas>();
+        //if (canvas.worldCamera == null)
+        //{
+        //    canvas.worldCamera = Camera.allCameras[0];
+        //}
+        //image = GetComponentInChildren<Image>();
+        //group = canvas.GetComponent<CanvasGroup>();
+        //text = GetComponentInChildren<TMPro.TextMeshProUGUI>();
+        //text.text = baseStats.hp.ToString();
     }
 
     public void StunEnemy(float stunTime)
@@ -47,8 +47,8 @@ public class EnemyBase : PlayerBase
     {
         base.takeDamage(damage);
         StunEnemy(stunOnHit);
-        text.text = ((int)(baseStats.hp * 10)).ToString() + "%";
-        shouldShowCanves = true;
+        //text.text = ((int)(baseStats.hp * 10)).ToString() + "%";
+        //shouldShowCanves = true;
     }
 
     private void updateImagePositionAndAlpha()
@@ -76,7 +76,7 @@ public class EnemyBase : PlayerBase
     private new void Update()
     {
         base.Update();
-        updateImagePositionAndAlpha();
+        //updateImagePositionAndAlpha();
     }
 
 

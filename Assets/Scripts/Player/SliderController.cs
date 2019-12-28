@@ -14,6 +14,8 @@ public class SliderController : MonoBehaviour
     bool useRelativerotation = false ;
 
     private Quaternion relativeRotation;
+    private FireController fireController;
+    private PlayerBase playerBase;
 
     Color low = new Color(.85f, 0, 0, 1f);
     Color cooldownColor = new Color(0, .85f, 0, 1f);
@@ -23,9 +25,16 @@ public class SliderController : MonoBehaviour
     {
         setSliderColors();
         relativeRotation = healthSlider.transform.localRotation;
-        coolDownSlider.maxValue = GetComponent<FireController>().FireRate;
-        healthSlider.maxValue = GetComponent<PlayerBase>().Hp;
+
+        fireController = GetComponent<FireController>();
+        playerBase = GetComponent<PlayerBase>();
+
+        coolDownSlider.maxValue = fireController.FireRate;
+        healthSlider.maxValue = playerBase.Hp;
         healthSlider.value = healthSlider.maxValue;
+
+        healthSlider.transform.rotation = relativeRotation;
+        coolDownSlider.transform.rotation = relativeRotation;
     }
 
     private void setSliderColors()
@@ -35,22 +44,12 @@ public class SliderController : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (useRelativerotation)
-        {
-            //relative rotation for sliders
-            healthSlider.transform.rotation = relativeRotation;
-            coolDownSlider.transform.rotation = relativeRotation;
-        }
-    }
-
     private void LateUpdate()
     {
-        updateCoolDownSlider(GetComponent<FireController>().CoolDownTime);
-        updateHealthSlider(GetComponent<PlayerBase>().Hp);
-        
+        return;
+        if (fireController.getCanFire())    updateCoolDownSlider(fireController.CoolDownTime);
+        if(playerBase.ShouldUpdateHealthCanvas())   updateHealthSlider(playerBase.Hp);
+       
     }
 
 

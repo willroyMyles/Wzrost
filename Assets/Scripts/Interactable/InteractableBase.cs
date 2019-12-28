@@ -18,14 +18,14 @@ public class InteractableBase : MonoBehaviour
 
     #region variables
     public InteractableType type;
-    bool interactable = true;
+    //bool interactable = true;
     float distance = 1.5f;
     float currentDistance;
     public Canvas canvasPrefab;
     Canvas canvas;
     CanvasGroup group;
     Image image;
-    TMPro.TextMeshProUGUI text;
+    Text text;
 
     float maxDistance = 1;
     bool shouldShowCanves = false;
@@ -41,14 +41,14 @@ public class InteractableBase : MonoBehaviour
     {
         gameObject.tag = "Interactable";
         canvas = Instantiate(canvasPrefab, gameObject.transform.position, Quaternion.identity);
-        canvas.transform.parent = gameObject.transform;
+        canvas.transform.SetParent( gameObject.transform);
         if (canvas.worldCamera == null)
         {
             canvas.worldCamera = Camera.allCameras[0];
         }
         image = canvas.GetComponentInChildren<Image>();
         group = canvas.GetComponent<CanvasGroup>();
-        text = GetComponentInChildren<TMPro.TextMeshProUGUI>();
+        text = GetComponentInChildren<Text>();
         text.text = name;
     }
 
@@ -67,9 +67,8 @@ public class InteractableBase : MonoBehaviour
             group.alpha = Mathf.Lerp(.9f, .1f, currentDistance / maxDistance);
 
             //update position
-            var screenpos = Camera.allCameras[0].WorldToScreenPoint(gameObject.transform.position);
-            var point = new Vector2();
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform, screenpos, Camera.allCameras[0], out point);
+            var screenpos = Global.Instance().mainCamera.WorldToScreenPoint(gameObject.transform.position);
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform, screenpos, Global.Instance().mainCamera, out var point);
             var adjustment = new Vector3(point.x, point.y-30f, 100f);
 
             image.transform.position = canvas.transform.TransformPoint(adjustment);
